@@ -1,0 +1,169 @@
+{
+  "proyecto": "examen-dam",
+  "features": [
+    {
+      "id": 1,
+      "name": "cobertura",
+      "title": "Matriz de cobertura del temario y recetas ordenadas por tema",
+      "description": "O-01: divide knowledge/patrones.md en knowledge/patrones/*.md (sin perder ni cambiar una sola receta) y escribe knowledge/cobertura.md: por cada tipo de ejercicio que puede caer (carrusel, Intents explícitos e implícitos, RecyclerView en lista y cuadrícula con clic, Realm con RecyclerView, menús, AlertDialog) su receta, la ruta de su ejemplo compilable y su estado (cubierta, hueco).",
+      "agente": "constructor-android",
+      "oleada": 1,
+      "depends_on": [],
+      "files": [
+        "knowledge/cobertura.md",
+        "knowledge/patrones.md",
+        "knowledge/patrones/basico.md",
+        "knowledge/patrones/intents.md",
+        "knowledge/patrones/recyclerview.md",
+        "knowledge/patrones/realm.md",
+        "knowledge/patrones/dialogos.md",
+        "knowledge/temario.md"
+      ],
+      "acceptance": [
+        { "criterio": "C1 · existe knowledge/cobertura.md", "verify": "test -f knowledge/cobertura.md" },
+        { "criterio": "C2 · knowledge/patrones.md ya no existe y las cinco recetas por tema sí", "verify": "test ! -f knowledge/patrones.md && test -f knowledge/patrones/basico.md && test -f knowledge/patrones/intents.md && test -f knowledge/patrones/recyclerview.md && test -f knowledge/patrones/realm.md && test -f knowledge/patrones/dialogos.md" },
+        { "criterio": "C3 · cada bloque de código del patrones.md original (git show HEAD~:knowledge/patrones.md en la base) aparece sin cambios en alguno de los ficheros nuevos", "verify": null },
+        { "criterio": "C4 · cobertura.md tiene una fila por cada bloque de 'Entra' de temario.md, con receta, ruta del ejemplo y estado; los menús constan como hueco con F-06", "verify": null }
+      ],
+      "status": "pending",
+      "intentos": 0,
+      "sha": null
+    },
+    {
+      "id": 2,
+      "name": "ejemplo_intents",
+      "title": "Ejemplo compilable de Intents explícitos e implícitos",
+      "description": "O-01: app mínima en tres pantallas que demuestra putExtra/getStringExtra, flecha atrás con parentActivityName, ACTION_DIAL, ACTION_SENDTO, ACTION_VIEW y createChooser, usando solo lo de knowledge/patrones/intents.md.",
+      "agente": "constructor-android",
+      "oleada": 2,
+      "depends_on": [1],
+      "files": ["knowledge/patrones/ejemplos/intents/**"],
+      "acceptance": [
+        { "criterio": "C1 · la solución compila en el esqueleto base", "verify": "sh tools/compilar.sh base knowledge/patrones/ejemplos/intents/solucion" },
+        { "criterio": "C2 · el README del ejemplo lista qué recetas demuestra y no usa nada de 'No entra' de temario.md", "verify": null }
+      ],
+      "status": "pending",
+      "intentos": 0,
+      "sha": null
+    },
+    {
+      "id": 3,
+      "name": "ejemplo_recyclerview",
+      "title": "Ejemplo compilable de RecyclerView en lista y cuadrícula con clic",
+      "description": "O-01: app con modelo, adaptador con ViewHolder interno e interfaz OnItemClickListener, botones lista/cuadrícula que cambian el LayoutManager sin volver a hacer setAdapter, y un clic que abre una segunda Activity con putExtra.",
+      "agente": "constructor-android",
+      "oleada": 2,
+      "depends_on": [1],
+      "files": ["knowledge/patrones/ejemplos/recyclerview/**"],
+      "acceptance": [
+        { "criterio": "C1 · la solución compila en el esqueleto base", "verify": "sh tools/compilar.sh base knowledge/patrones/ejemplos/recyclerview/solucion" },
+        { "criterio": "C2 · hay dos layouts de ítem (lista y cuadrícula) con las medidas de RecyclerView_Medidas_List_Grid y el clic llega a la segunda Activity con el nombre del ítem", "verify": null }
+      ],
+      "status": "pending",
+      "intentos": 0,
+      "sha": null
+    },
+    {
+      "id": 4,
+      "name": "ejemplo_realm",
+      "title": "Ejemplo compilable de Realm con RecyclerView: alta, edición y borrado",
+      "description": "O-01: app de notas con Note, MyApplication, id siguiente con max(\"id\"), RecyclerView de RealmResults con addChangeListener, AlertDialog con layout inflado para dar de alta y editar, y borrado con deleteFromRealm, en el esqueleto realm.",
+      "agente": "constructor-android",
+      "oleada": 2,
+      "depends_on": [1],
+      "files": ["knowledge/patrones/ejemplos/realm/**"],
+      "acceptance": [
+        { "criterio": "C1 · la solución compila en el esqueleto realm", "verify": "sh tools/compilar.sh realm knowledge/patrones/ejemplos/realm/solucion" },
+        { "criterio": "C2 · cierra Realm en onDestroy, controla findFirst() nulo y max(\"id\") nulo, y todas las escrituras van en transacción", "verify": null }
+      ],
+      "status": "pending",
+      "intentos": 0,
+      "sha": null
+    },
+    {
+      "id": 5,
+      "name": "ejemplo_carrusel",
+      "title": "Ejemplo compilable del carrusel de imágenes",
+      "description": "O-01: app del ejercicio E3: ImageView, dos botones, ArrayList<Integer> de drawables, índice que da la vuelta por los dos extremos y updateImage().",
+      "agente": "constructor-android",
+      "oleada": 2,
+      "depends_on": [1],
+      "files": ["knowledge/patrones/ejemplos/carrusel/**"],
+      "acceptance": [
+        { "criterio": "C1 · la solución compila en el esqueleto base", "verify": "sh tools/compilar.sh base knowledge/patrones/ejemplos/carrusel/solucion" },
+        { "criterio": "C2 · el índice vuelve al primero tras el último y al último antes del primero", "verify": null }
+      ],
+      "status": "pending",
+      "intentos": 0,
+      "sha": null
+    },
+    {
+      "id": 6,
+      "name": "menus",
+      "title": "Receta y ejemplo compilable de Option menu y Context menu",
+      "description": "O-01: el temario solo da el título de estos dos temas. Receta mínima estándar (res/menu, onCreateOptionsMenu, onOptionsItemSelected, registerForContextMenu, onCreateContextMenu, onContextItemSelected) con un ejemplo que compile; cada API se confirma compilando.",
+      "agente": "constructor-android",
+      "oleada": 3,
+      "depends_on": [1],
+      "files": ["knowledge/patrones/menus.md", "knowledge/patrones/ejemplos/menus/**"],
+      "acceptance": [
+        { "criterio": "C1 · la solución compila en el esqueleto base", "verify": "sh tools/compilar.sh base knowledge/patrones/ejemplos/menus/solucion" },
+        { "criterio": "C2 · menus.md dice con todas las letras que el temario solo trae el título y que la receta es la estándar mínima", "verify": "grep -q 'solo el título' knowledge/patrones/menus.md" }
+      ],
+      "status": "pending",
+      "intentos": 0,
+      "sha": null
+    },
+    {
+      "id": 7,
+      "name": "ensayo_intents_carrusel",
+      "title": "Ensayo 1: ejercicio inventado de Intents y carrusel",
+      "description": "O-01: un enunciado inventado (examenes/_ensayos/ENS-01/enunciado.md) resuelto de punta a punta con el formato real de un ejercicio (SPEC.md, solucion/, LEEME.md), como lo haría /examen. Sirve para probar el flujo.",
+      "agente": "constructor-android",
+      "oleada": 3,
+      "depends_on": [2, 5],
+      "files": ["examenes/_ensayos/ENS-01/**"],
+      "acceptance": [
+        { "criterio": "C1 · la solución compila en el esqueleto base", "verify": "sh tools/compilar.sh base examenes/_ensayos/ENS-01/solucion" },
+        { "criterio": "C2 · LEEME.md trae orden de pegado e imágenes necesarias, y SPEC.md una tabla requisito → fichero:línea → ✅ con todos los requisitos del enunciado", "verify": null }
+      ],
+      "status": "pending",
+      "intentos": 0,
+      "sha": null
+    },
+    {
+      "id": 8,
+      "name": "ensayo_recyclerview",
+      "title": "Ensayo 2: ejercicio inventado de RecyclerView lista/cuadrícula con clic",
+      "description": "O-01: segundo enunciado inventado (ENS-02) con RecyclerView, cambio lista/cuadrícula y clic que abre otra pantalla, resuelto con el formato real de un ejercicio.",
+      "agente": "constructor-android",
+      "oleada": 3,
+      "depends_on": [3],
+      "files": ["examenes/_ensayos/ENS-02/**"],
+      "acceptance": [
+        { "criterio": "C1 · la solución compila en el esqueleto base", "verify": "sh tools/compilar.sh base examenes/_ensayos/ENS-02/solucion" },
+        { "criterio": "C2 · LEEME.md trae orden de pegado e imágenes necesarias, y SPEC.md una tabla requisito → fichero:línea → ✅ con todos los requisitos del enunciado", "verify": null }
+      ],
+      "status": "pending",
+      "intentos": 0,
+      "sha": null
+    },
+    {
+      "id": 9,
+      "name": "ensayo_realm",
+      "title": "Ensayo 3: ejercicio inventado de Realm con RecyclerView y AlertDialog",
+      "description": "O-01: tercer enunciado inventado (ENS-03) de gestión de datos con Realm, lista y diálogo, resuelto con el formato real de un ejercicio.",
+      "agente": "constructor-android",
+      "oleada": 3,
+      "depends_on": [4],
+      "files": ["examenes/_ensayos/ENS-03/**"],
+      "acceptance": [
+        { "criterio": "C1 · la solución compila en el esqueleto realm", "verify": "sh tools/compilar.sh realm examenes/_ensayos/ENS-03/solucion" },
+        { "criterio": "C2 · LEEME.md trae orden de pegado, cambios de Gradle e imágenes necesarias, y SPEC.md una tabla requisito → fichero:línea → ✅ con todos los requisitos del enunciado", "verify": null }
+      ],
+      "status": "pending",
+      "intentos": 0,
+      "sha": null
+    }
+  ]
+}
