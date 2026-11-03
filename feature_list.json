@@ -37,7 +37,7 @@
           "verify": null
         }
       ],
-      "status": "approved",
+      "status": "done",
       "intentos": 0,
       "sha": "35344be"
     },
@@ -64,7 +64,7 @@
           "verify": null
         }
       ],
-      "status": "pending",
+      "status": "in_progress",
       "intentos": 0,
       "sha": null
     },
@@ -91,7 +91,7 @@
           "verify": null
         }
       ],
-      "status": "pending",
+      "status": "in_progress",
       "intentos": 0,
       "sha": null
     },
@@ -118,7 +118,7 @@
           "verify": null
         }
       ],
-      "status": "pending",
+      "status": "in_progress",
       "intentos": 0,
       "sha": null
     },
