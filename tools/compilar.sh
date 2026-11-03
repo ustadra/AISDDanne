@@ -8,7 +8,7 @@
 #   [paquete]: si la solución no usa com.example.examen, su namespace/applicationId.
 #
 # Sale con 0 solo si Gradle dice BUILD SUCCESSFUL. Escribe todo en una carpeta temporal fuera del repo
-# (se imprime su ruta) y deja el log en <temporal>/gradle.log. No toca plantilla/ ni la solución.
+# (se imprime su ruta) y deja el log en <temporal>/gradle.log. Va con --no-daemon (el demonio se apaga solo): nada de `gradlew --stop`, que mataría las compilaciones de otros agentes en paralelo. No toca plantilla/ ni la solución.
 # Rutas de JDK y SDK: knowledge/compilar.md. Se pueden sobrescribir con JAVA_HOME_COMPILAR y ANDROID_SDK_COMPILAR.
 
 ESQ="$1"; SOL="$2"; PAQ="${3:-com.example.examen}"
@@ -45,7 +45,6 @@ done
 cd "$TMP" || exit 2
 JAVA_HOME="$JDK" ANDROID_HOME="$SDK" ./gradlew.bat assembleDebug --no-daemon </dev/null > gradle.log 2>&1
 CODIGO=$?
-JAVA_HOME="$JDK" ANDROID_HOME="$SDK" ./gradlew.bat --stop </dev/null >/dev/null 2>&1
 
 if [ "$CODIGO" -eq 0 ] && grep -q "BUILD SUCCESSFUL" gradle.log; then
   grep "BUILD SUCCESSFUL" gradle.log
