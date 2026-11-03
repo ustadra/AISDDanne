@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#e7ecef"
+    android:orientation="vertical">
+
+    <Button
+        android:id="@+id/btnCambiarVista"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Cambiar vista" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerAnimales"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+</LinearLayout>
