@@ -44,7 +44,7 @@
 
 | Id | Feature | Oleada | Agente principal | Escribe en (exclusivo) | Tamaño | Estado | Veredicto |
 |---|---|---|---|---|---|---|---|
-| 1 | cobertura | 1 | constructor-android | `knowledge/cobertura.md`, `knowledge/patrones.md`, `knowledge/patrones/{basico,intents,recyclerview,realm,dialogos}.md`, `knowledge/temario.md` | ~250 | pendiente | — |
+| 1 | cobertura | 1 | constructor-android | `knowledge/cobertura.md`, `knowledge/patrones.md`, `knowledge/patrones/{basico,intents,recyclerview,realm,dialogos}.md`, `knowledge/temario.md` | ~250 | aprobada | 35344be |
 | 2 | ejemplo_intents | 2 | constructor-android | `knowledge/patrones/ejemplos/intents/**` | ~250 | pendiente | — |
 | 3 | ejemplo_recyclerview | 2 | constructor-android | `knowledge/patrones/ejemplos/recyclerview/**` | ~300 | pendiente | — |
 | 4 | ejemplo_realm | 2 | constructor-android | `knowledge/patrones/ejemplos/realm/**` | ~300 | pendiente | — |
@@ -58,3 +58,4 @@
 
 <!-- Una línea por hecho: fecha · feature u oleada · qué pasó (entrega <sha7>, veredicto, merge <sha7>, bloqueo) · incidencias -->
 - 2026-11-03 · oleada 0 · commit inicial en `main` (cc844ea) y adopción del kit en `orquesta/examen-dam` (5d25a3d): AGENTS/CLAUDE/GEMINI, hooks, githooks, squad, skills, rules, `tools/compilar.sh`. Verificación de arquitectura: JSON válidos, hooks cableados existen, `comprobar.mjs` 3/3, tests de `/orquesta` y `/nuevo-agente` 51/51.
+- 2026-11-03 · F-01 · entrega 35344be, qa APROBADA (ronda 1, 18/18 bloques de código intactos), puerta ok; el commit ya estaba en la integración (modo oleadas)
