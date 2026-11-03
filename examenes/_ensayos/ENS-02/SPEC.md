@@ -36,11 +36,11 @@ Ver `feature_list.json`, feature 8: compila en el esqueleto `base` y `SPEC.md` t
 
 | Requisito | Fichero:línea | ✅/❌ |
 |---|---|---|
-| R1 | `activity_main.xml:28` (recyclerAnimales), `MainActivity.java:42-48` (5 animales), `MyAnimal.java:3`, `ImageAdapter.java:14,55` (adaptador y ViewHolder) | ✅ |
-| R2 | `activity_main.xml:9-13` (btnCambiarVista), `MainActivity.java:60,63-75` (arranca en lista, alterna) | ✅ |
-| R3 | `animal_list.xml:2-21` (imagen izquierda, nombre derecha), `animal_grid.xml:2-20` (imagen arriba, nombre centrado), `ImageAdapter.java:40` | ✅ |
-| R4 | `MainActivity.java:52-57` (Toast + Intent a DetailActivity), `AndroidManifest.xml:24-26` | ✅ |
-| R5 | `activity_detail.xml:9-20` (ivFoto, tvNombre), `DetailActivity.java:37-47` | ✅ |
-| R6 | `activity_detail.xml:22-27` (btnVolver), `DetailActivity.java:49-54` (`finish()`) | ✅ |
-| R7 | `DetailActivity.java:39-43` (`Sin nombre` si `getStringExtra` es null) | ✅ |
+| R1 | `activity_main.xml:15-18` (recyclerAnimales), `MainActivity.java:43-47` (5 animales), `MyAnimal.java:3`, `ImageAdapter.java:14,55` (adaptador y ViewHolder) | ✅ |
+| R2 | `activity_main.xml:9-13` (btnCambiarVista), `MainActivity.java:60,63-74` (arranca en lista, alterna) | ✅ |
+| R3 | `animal_list.xml:2-22` (imagen izquierda, nombre derecha), `animal_grid.xml:2-20` (imagen arriba, nombre centrado), `ImageAdapter.java:40` | ✅ |
+| R4 | `MainActivity.java:52-56` (Toast + Intent a DetailActivity), `AndroidManifest.xml:24-26` | ✅ |
+| R5 | `activity_detail.xml:9-20` (ivFoto, tvNombre), `DetailActivity.java:36-46` | ✅ |
+| R6 | `activity_detail.xml:22-27` (btnVolver), `DetailActivity.java:48-53` (`finish()`) | ✅ |
+| R7 | `DetailActivity.java:36,39-43` (`Sin nombre` si `getStringExtra` es null) | ✅ |
 | R8 | Solo LinearLayout, RecyclerView, Intent explícito, Toast, clases anónimas (todo en `temario.md`) | ✅ |
