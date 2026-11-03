@@ -29,7 +29,7 @@ node .claude/hooks/enlazar-skills.cjs    # una vez por clon: .agents/skills → 
 node .claude/skills/nuevo-agente/scripts/comprobar.mjs   # ¿tienen los agentes la forma de la plantilla? (solo lee)
 node --test .claude/skills/orquesta/scripts/*.test.mjs   # puerta de merge de /orquesta
 ```
-Compilar un ejercicio: `knowledge/compilar.md` (JDK y SDK de Android Studio; cada esqueleto exige su JDK). `.githooks/checks` lleva los dos primeros tests como comprobación del pre-push.
+Compilar un ejercicio: `knowledge/compilar.md` (JDK y SDK de Android Studio; cada esqueleto exige su JDK). `.githooks/checks` lleva esos tres tests como comprobación del pre-push (puerta, features y comprobador de agentes).
 
 ## Puntos de entrada
 

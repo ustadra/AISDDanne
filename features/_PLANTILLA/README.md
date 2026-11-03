@@ -8,7 +8,7 @@ Una feature es un trozo de producto que se puede enseñar, no una tarea. Si al e
 
 ## Cómo se cierra
 
-`pendiente` → `en curso` → **`en revisión`** (quien construye entrega un commit) → `qa` lo verifica → **`aprobada`** o **`cambios pedidos`** (lo anota el supervisor, con el sha del commit juzgado) → puerta y merge a la rama de integración → `tester`/`ciberseguridad` si aplica → `revisor` → **`hecha`** cuando la persona lo acepta. `bloqueada` en cualquier momento, con el motivo en sus notas.
+`pendiente` → `en curso` → **`en revisión`** (quien construye entrega un commit) → `qa` lo verifica → **`aprobada`** o **`cambios pedidos`** (lo anota el supervisor, con el sha del commit juzgado) → puerta y merge a la rama de integración → `revisor` (si el plan lo pide) → **`hecha`** cuando la persona lo acepta. `bloqueada` en cualquier momento, con el motivo en sus notas.
 
 - El veredicto de `qa` vale para un commit: si la feature se toca después de `aprobada`, vuelve a `en revisión`.
 - Como mucho dos vueltas de `cambios pedidos`; a la tercera se para y decide la persona.

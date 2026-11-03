@@ -30,7 +30,7 @@ Todos los agentes del kit tienen la misma forma: el mismo frontmatter, las misma
 3. **Decide modelo y herramientas** con las tablas de abajo, y escribe el porqué en una línea. Lo enseñas en el paso 6.
 4. **Escribe `.claude/agents/<rol>.md` desde la plantilla.** Sigue «Cómo se escribe el prompt». Quita todos los `<…>` y las ramas «Si construyes / Si solo lees» que no apliquen.
 5. **Comprueba:** `node .claude/skills/nuevo-agente/scripts/comprobar.mjs .claude/agents/<rol>.md`. Cero errores. Un aviso se arregla o se justifica en el catálogo.
-6. **Los cuatro sitios, en el mismo cambio** ([`.claude/rules/agentes-y-skills.md`](../../rules/agentes-y-skills.md)):
+6. **Los cuatro sitios, en el mismo cambio** (en este repo solo existen el fichero del agente y `squad/_catalogo.md`; no hay `_orchestrator` ni diagrama de arquitectura que tocar):
    - `squad/_catalogo.md`: fila del roster (modelo, tools, naturaleza, cuándo se activa), su fila en la regla de activación si cambia qué squad entra, y una nota de colaboración si linda con otro rol.
    - Tabla de ruteo de `_orchestrator/SKILL.md`, con bump de `version:` y entrada en su `CHANGELOG.md`.
    - El diagrama `docs/Arquitectura/AI_SDD-Arquitectura-y-Uso.excalidraw` y su lámina, que cuentan los roles.

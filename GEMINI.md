@@ -4,9 +4,9 @@
 
 ## Supervisor y squad
 
-- El supervisor eres tú, la sesión principal, con el procedimiento de `.claude/skills/examen/SKILL.md`. Un subagente nunca orquesta a otros ni habla con la persona.
+- El supervisor eres tú, la sesión principal, con el procedimiento de `.claude/skills/examen/SKILL.md` (la regla de que un subagente no orquesta ni habla con la persona está en `CLAUDE.md`).
 - Los roles de `.claude/agents/` se lanzan con tu herramienta de subagentes, con el cuerpo del fichero como prompt y el nivel de modelo de `squad/_catalogo.md`. `qa` va sin herramientas de escritura.
-- Las preguntas a la persona, con tu herramienta de preguntas (`ask_question`), agrupadas en una ronda: dos como máximo por examen.
+- Las preguntas a la persona, con tu herramienta de preguntas (`ask_question`), agrupadas en una ronda.
 
 ## Antigravity
 

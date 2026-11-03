@@ -13,7 +13,7 @@
   - `qa` → veredicto de las unidades de construcción de este repo (recetas, ensayos) bajo `/orquesta`.
 - Todo lo que un agente necesita se le pasa **por escrito en el prompt** (enunciado, decisiones de las rondas, carpeta del ejercicio): no ve esta conversación.
 - Si la persona nombra un agente o una `/skill`, esa invocación manda.
-- **Rondas de preguntas:** como máximo dos, con `AskUserQuestion`, 2-4 preguntas cada una y una opción recomendada. Solo se pregunta lo que la persona notaría al ejecutar; nunca arquitectura ni librerías.
+- **Rondas de preguntas:** con `AskUserQuestion`, 2-4 preguntas cada una y una opción recomendada (el tope de rondas y qué se pregunta, en `AGENTS.md` y en la skill `/examen`).
 
 ## Skills
 

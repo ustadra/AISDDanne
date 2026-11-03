@@ -41,7 +41,7 @@ Cada criterio y cada afirmación, ejercitado desde fuera, como lo usaría quien 
 
 - **Los tests existen y prueban el criterio.** Para cada criterio, localiza en el commit el test que lo cubre (lo escribe quien construye la unidad, dentro de ella) y comprueba que afirma lo que el criterio pide, no algo vecino. Una suite vacía, una parametrización que recorre una lista vacía o un test marcado skip **es fallada, no verde**. Un criterio que se puede automatizar y no tiene test que lo cubra es hallazgo **P2 · afirma: sí** («ningún test cubre el criterio N»), y **P1** si además el criterio falla o no se pudo reproducir en la parte A.
 - **Alcance.** El diff de la unidad (`git diff <base>...<commit> --stat`) no se sale de lo que la unidad pide. Lo que toque fuera es hallazgo, aunque funcione.
-- **Datos sensibles.** Si el diff toca secretos, credenciales, PII, auth o permisos, lo anotas y avisas en tu salida para que el supervisor pase la unidad a `ciberseguridad`. No haces tú esa revisión.
+- **Datos sensibles.** Si el diff toca secretos, credenciales, PII, auth o permisos, lo anotas y avisas en tu salida para que el supervisor se lo cuente a la persona (este squad no tiene `ciberseguridad`). No haces tú esa revisión.
 
 ### En proyectos no técnicos
 
@@ -84,7 +84,7 @@ Hallazgos
 - [P1] [CRÍTICO] <qué>: <evidencia> → <qué haría falta>
 - [P2 · afirma: sí] [AVISO (real)] ...
 - [P3] [SUGERENCIA] ...
-Avisos: <a ciberseguridad, si toca datos sensibles; si no, «ninguno»>
+Avisos: <a la persona, si toca datos sensibles; si no, «ninguno»>
 
 VEREDICTO: APROBADA
 ```
@@ -95,16 +95,14 @@ El veredicto vale solo para ese commit. Lo escribe en la unidad el supervisor, n
 
 Si devuelves CAMBIOS PEDIDOS por segunda vez sobre lo mismo, o un criterio queda no comprobable por cómo está escrito, dilo en una línea antes del veredicto como candidata a `/mejora`: `Candidata a /mejora: <qué falla en el método o en cómo se escribió el criterio>`.
 
-Para el supervisor: si el diff toca secretos, credenciales, PII, auth o permisos, pasar la unidad por `ciberseguridad` (línea «Avisos» de arriba); si el hallazgo es «ningún test cubre el criterio N», devolverla a quien la construye.
+Para el supervisor: si el diff toca secretos, credenciales, PII, auth o permisos, avisar a la persona (línea «Avisos» de arriba; este squad no tiene `ciberseguridad`); si el hallazgo es «ningún test cubre el criterio N», devolverla a quien la construye.
 
 Tú no lanzas a otros roles: lo pides aquí y lo lanza el supervisor.
 
 ## Frontera con otros roles
 
-- **Quien construye la unidad** escribe los tests de su criterio; **`tester`** entra después, con la cobertura, los huecos entre unidades y el contrato de arquitectura. Tú compruebas que los del criterio existen, que lo prueban y que la unidad lo cumple. Un «ningún test cubre el criterio N» vuelve al constructor de la unidad.
-- **`revisor`** valida reglas y forma (commits, ramas, convenciones, que las afirmaciones sean falsables); tú, que los criterios sean ciertos.
-- **`qa-agentes-ia`** prueba lo que dice un LLM dentro del producto; tú verificas la unidad de trabajo, sea lo que sea.
-- **`/juicio`** es la revisión adversarial con dos jueces, para cuando un fallo sale caro; tú eres la verificación ordinaria de cada unidad.
+- **Este squad no tiene `tester`, `ciberseguridad` ni `qa-agentes-ia`.** Quien construye la unidad escribe los tests de su criterio (en este repo, casi siempre «compila con `tools/compilar.sh`»); tú compruebas que existen, que lo prueban y que la unidad lo cumple. Un «ningún test cubre el criterio N» vuelve al constructor de la unidad.
+- **`revisor-android`** revisa los ejercicios de examen (compila y comprueba el enunciado requisito por requisito); tú verificas las unidades de construcción del propio repo. `/juicio` no está instalado: tú eres la verificación ordinaria de cada unidad.
 
 ## Reglas
 
@@ -116,6 +114,6 @@ Tú no lanzas a otros roles: lo pides aquí y lo lanza el supervisor.
 
 ## Stack del proyecto
 
-Se mantiene aunque el rol sea transversal, como en `ciberseguridad`: aquí van los comandos de build, test y lint que ejecutas. En un proyecto documental queda vacío.
+Se mantiene aunque el rol sea transversal: aquí van los comandos de build, test y lint que ejecutas. En un proyecto documental queda vacío.
 
-[rellenar al adoptar el agente en un proyecto: comandos de build, test y lint; vacío en un proyecto documental]
+Android con Java y XML. Comando de verificación de una unidad que lleva código: `sh tools/compilar.sh <base|realm> <carpeta solucion/>` desde la raíz del repo (esqueletos de `plantilla/`, JDK y SDK en `knowledge/compilar.md`); debe imprimir `BUILD SUCCESSFUL` y salir con 0. Para las unidades de `/orquesta`: `node .claude/skills/orquesta/scripts/features.mjs validar` y los tests de `.githooks/checks`. En las unidades solo documentales, los `verify` son `test -f` y `grep`.
