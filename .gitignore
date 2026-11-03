@@ -1,0 +1,27 @@
+salida/*/build/
+.gradle/
+local.properties
+
+# --- Arquitectura de agentes (AI_SDD) ---
+# Personal de cada persona
+CLAUDE.local.md
+.claude/settings.local.json
+
+# Worktrees de agentes en paralelo (una tarea = una rama = un worktree)
+.claude/worktrees/
+
+# Registros locales de los hooks (memory-audit…): no se versionan
+.claude/logs/
+
+# Estado de trabajo de la sesión (handoff de /orquesta y del cierre de unidad): no se versiona
+.claude/state/
+
+# Enlace local a .claude/skills para Codex y Gemini CLI (lo crea enlazar-skills.cjs en cada clon)
+.agents/skills
+
+# Secretos: solo se versiona la plantilla
+.env
+.env.*
+!.env.example
+
+# --- fin arquitectura de agentes ---
