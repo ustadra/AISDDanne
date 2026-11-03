@@ -9,3 +9,6 @@
 
 ## 2.1.0
 - La unidad de trabajo pasa a ser el ejercicio: `examenes/<examen>/EJ-NN/` con su `SPEC.md` (estado y veredicto), `solucion/` y `LEEME.md`, en vez de `salida/<examen>/`. Lo exige la adopción del kit (`unit-close`, `/orquesta`).
+
+## 2.1.1
+- La regla «cero invención» remite a `knowledge/patrones/` (el fichero único `patrones.md` se dividió por tema en O-01/F-01).

@@ -28,4 +28,4 @@ Sin cambios de Gradle ni imágenes. Sin `strings.xml`: textos directos.
 
 ## No verificado
 
-Ninguna API sin compilar, pero las recetas de Option menu y Context menu no están en las diapositivas de clase, solo en la API estándar de Android.
+Todas las APIs compilan. Las recetas de Option menu y Context menu no están en las diapositivas de clase (solo el título), sino en la API estándar de Android. El comportamiento en ejecución (que el menú se vea y responda) no se ha probado en un móvil o emulador.

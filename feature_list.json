@@ -64,9 +64,9 @@
           "verify": null
         }
       ],
-      "status": "in_progress",
+      "status": "done",
       "intentos": 0,
-      "sha": null
+      "sha": "f6341a5"
     },
     {
       "id": 3,
@@ -91,9 +91,9 @@
           "verify": null
         }
       ],
-      "status": "in_progress",
+      "status": "done",
       "intentos": 0,
-      "sha": null
+      "sha": "38e8b63"
     },
     {
       "id": 4,
@@ -118,9 +118,9 @@
           "verify": null
         }
       ],
-      "status": "in_progress",
+      "status": "done",
       "intentos": 0,
-      "sha": null
+      "sha": "a7d1e0c"
     },
     {
       "id": 5,
@@ -145,9 +145,9 @@
           "verify": null
         }
       ],
-      "status": "pending",
+      "status": "done",
       "intentos": 0,
-      "sha": null
+      "sha": "4feff8a"
     },
     {
       "id": 6,
@@ -173,9 +173,9 @@
           "verify": "grep -q 'solo el título' knowledge/patrones/menus.md"
         }
       ],
-      "status": "pending",
+      "status": "done",
       "intentos": 0,
-      "sha": null
+      "sha": "3cf1105"
     },
     {
       "id": 7,
@@ -201,9 +201,9 @@
           "verify": null
         }
       ],
-      "status": "pending",
+      "status": "done",
       "intentos": 0,
-      "sha": null
+      "sha": "0bee56d"
     },
     {
       "id": 8,
@@ -228,9 +228,9 @@
           "verify": null
         }
       ],
-      "status": "pending",
-      "intentos": 0,
-      "sha": null
+      "status": "done",
+      "intentos": 1,
+      "sha": "5b16a27"
     },
     {
       "id": 9,
@@ -255,9 +255,9 @@
           "verify": null
         }
       ],
-      "status": "pending",
+      "status": "done",
       "intentos": 0,
-      "sha": null
+      "sha": "eda432c"
     }
   ]
 }

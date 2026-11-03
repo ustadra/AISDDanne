@@ -1,6 +1,6 @@
 ---
 name: examen
-version: 2.1.0
+version: 2.1.1
 description: Orquesta la resolución de un examen de Android de 2º de DAM (Java + XML) ceñido a lo dado en clase. Hace una o dos rondas de preguntas sencillas para que la persona controle el resultado, reparte el trabajo entre `constructor-android` y `revisor-android` y entrega el ejercicio completo. También retoca lo ya hecho («este botón así»). Invocar con /examen, al pegar un enunciado, o ante «hazme el examen», «cambia este botón».
 ---
 
@@ -85,7 +85,7 @@ Cuando la persona pide un cambio sobre lo ya entregado («el botón más grande 
 
 ## Reglas de oro
 
-- **Cero invención.** Lo que no está en `temario.md`, `patrones.md`, `ui-xml.md` o los ejercicios de clase no se escribe de memoria; se marca «no verificado» y se pregunta o se sustituye.
+- **Cero invención.** Lo que no está en `temario.md`, `knowledge/patrones/`, `ui-xml.md` o los ejercicios de clase no se escribe de memoria; se marca «no verificado» y se pregunta o se sustituye.
 - **Nunca digas «compila» sin un `BUILD SUCCESSFUL` del revisor.**
 - **Tres intentos y paras** en cualquier bucle.
 - **Los agentes reciben todo por escrito.** Lo que solo se dijo en la conversación se pierde.

@@ -8,7 +8,7 @@
 
 | Id | Objetivo | Fecha | De dónde sale | Estado |
 |---|---|---|---|---|
-| O-01 | Poder resolver cualquier ejercicio del temario (carrusel, Intents, RecyclerView en lista y cuadrícula con clic, Realm con RecyclerView y AlertDialog, menús) con un código de ejemplo de cada tipo **que compila**, una matriz que dice qué cubre cada receta y tres ensayos de punta a punta. Done: las 9 features aprobadas por `qa` y mergeadas; `knowledge/cobertura.md` sin huecos salvo los declarados | 2026-11-03 | `/objetivo` de la persona: «desplegar la arquitectura para poder hacer todos los ejercicios del examen que pasemos al repo» | en curso |
+| O-01 | Poder resolver cualquier ejercicio del temario (carrusel, Intents, RecyclerView en lista y cuadrícula con clic, Realm con RecyclerView y AlertDialog, menús) con un código de ejemplo de cada tipo **que compila**, una matriz que dice qué cubre cada receta y tres ensayos de punta a punta. Done: las 9 features aprobadas por `qa` y mergeadas; `knowledge/cobertura.md` sin huecos salvo los declarados | 2026-11-03 | `/objetivo` de la persona: «desplegar la arquitectura para poder hacer todos los ejercicios del examen que pasemos al repo» | aprobadas las 9 features; pendiente de aceptación de la persona |
 
 ## Plan de ejecución
 
@@ -45,17 +45,20 @@
 | Id | Feature | Oleada | Agente principal | Escribe en (exclusivo) | Tamaño | Estado | Veredicto |
 |---|---|---|---|---|---|---|---|
 | 1 | cobertura | 1 | constructor-android | `knowledge/cobertura.md`, `knowledge/patrones.md`, `knowledge/patrones/{basico,intents,recyclerview,realm,dialogos}.md`, `knowledge/temario.md` | ~250 | aprobada | 35344be |
-| 2 | ejemplo_intents | 2 | constructor-android | `knowledge/patrones/ejemplos/intents/**` | ~250 | pendiente | — |
-| 3 | ejemplo_recyclerview | 2 | constructor-android | `knowledge/patrones/ejemplos/recyclerview/**` | ~300 | pendiente | — |
-| 4 | ejemplo_realm | 2 | constructor-android | `knowledge/patrones/ejemplos/realm/**` | ~300 | pendiente | — |
-| 5 | ejemplo_carrusel | 2 | constructor-android | `knowledge/patrones/ejemplos/carrusel/**` | ~120 | pendiente | — |
-| 6 | menus | 3 | constructor-android | `knowledge/patrones/menus.md`, `knowledge/patrones/ejemplos/menus/**` | ~200 | pendiente | — |
-| 7 | ensayo_intents_carrusel | 3 | constructor-android | `examenes/_ensayos/ENS-01/**` | ~250 | pendiente | — |
-| 8 | ensayo_recyclerview | 3 | constructor-android | `examenes/_ensayos/ENS-02/**` | ~300 | pendiente | — |
-| 9 | ensayo_realm | 3 | constructor-android | `examenes/_ensayos/ENS-03/**` | ~300 | pendiente | — |
+| 2 | ejemplo_intents | 2 | constructor-android | `knowledge/patrones/ejemplos/intents/**` | ~250 | aprobada | f6341a5 |
+| 3 | ejemplo_recyclerview | 2 | constructor-android | `knowledge/patrones/ejemplos/recyclerview/**` | ~300 | aprobada | 38e8b63 |
+| 4 | ejemplo_realm | 2 | constructor-android | `knowledge/patrones/ejemplos/realm/**` | ~300 | aprobada | a7d1e0c |
+| 5 | ejemplo_carrusel | 2 | constructor-android | `knowledge/patrones/ejemplos/carrusel/**` | ~120 | aprobada | 4feff8a |
+| 6 | menus | 3 | constructor-android | `knowledge/patrones/menus.md`, `knowledge/patrones/ejemplos/menus/**` | ~200 | aprobada | 3cf1105 |
+| 7 | ensayo_intents_carrusel | 3 | constructor-android | `examenes/_ensayos/ENS-01/**` | ~250 | aprobada | 0bee56d |
+| 8 | ensayo_recyclerview | 3 | constructor-android | `examenes/_ensayos/ENS-02/**` | ~300 | aprobada | 5b16a27 |
+| 9 | ensayo_realm | 3 | constructor-android | `examenes/_ensayos/ENS-03/**` | ~300 | aprobada | eda432c |
 
 ## Registro de ejecución
 
 <!-- Una línea por hecho: fecha · feature u oleada · qué pasó (entrega <sha7>, veredicto, merge <sha7>, bloqueo) · incidencias -->
 - 2026-11-03 · oleada 0 · commit inicial en `main` (cc844ea) y adopción del kit en `orquesta/examen-dam` (5d25a3d): AGENTS/CLAUDE/GEMINI, hooks, githooks, squad, skills, rules, `tools/compilar.sh`. Verificación de arquitectura: JSON válidos, hooks cableados existen, `comprobar.mjs` 3/3, tests de `/orquesta` y `/nuevo-agente` 51/51.
 - 2026-11-03 · F-01 · entrega 35344be, qa APROBADA (ronda 1, 18/18 bloques de código intactos), puerta ok; el commit ya estaba en la integración (modo oleadas)
+- 2026-11-03 · oleada 2 · F-02 f6341a5, F-03 38e8b63, F-04 a7d1e0c, F-05 4feff8a: qa APROBADA en ronda 1, puerta ok.
+- 2026-11-03 · oleada 3 · F-06 3cf1105, F-07 0bee56d, F-09 eda432c: qa APROBADA en ronda 1, puerta ok. F-08 5a919d1: CAMBIOS PEDIDOS (P2, una referencia de línea inexistente en la tabla del SPEC); corregida en 5b16a27, qa APROBADA en ronda 2.
+- 2026-11-03 · incidencias: (1) los agentes del repo (constructor-android, revisor-android) no están registrados en la sesión abierta desde AI_SDD; se lanzaron con `general-purpose` adoptando el rol leyendo su fichero, como prevé AGENTS.md. (2) `tools/compilar.sh` ejecutaba `gradlew --stop` al terminar y mataba las compilaciones paralelas de otros agentes (dos intentos fallaron con «daemon stopped»); corregido en 7904196. (3) Dos constructores usaron Bash fuera de la excepción pactada (un `ls` y un script de Python para editar el SPEC); sin efecto sobre ficheros ajenos (comprobado con el diff).

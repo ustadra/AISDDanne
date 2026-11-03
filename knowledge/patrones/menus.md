@@ -60,7 +60,7 @@ public boolean onOptionsItemSelected(MenuItem item) {
     return super.onOptionsItemSelected(item);
 }
 ```
-Se compara con `if / else if` y no con `switch (item.getItemId())`: en proyectos con AGP moderno los ids de `R` no son constantes y `switch` no compila (no probado aquí; `if / else if` sí compila).
+Se compara con `if / else if` y no con `switch (item.getItemId())`: en proyectos con AGP moderno los ids de `R` no son constantes y `switch` no compila (verificado por `qa` el 2026-11-03: con `switch` el compilador da `constant expression required`; `if / else if` sí compila).
 
 ## 2. Context menu (pulsación larga sobre una vista)
 
