@@ -1,6 +1,6 @@
 # Temario dado en clase (lo que cae y lo que no)
 
-Fuente: 5 PDFs de teoría (Intent, RecyclerView, RecyclerView Pasos, RecyclerView Medidas List/Grid, Realm) y 6 proyectos de ejercicios (E3, E4, E5, E6, E8, Realm). Todo en **Java + XML**.
+Fuente: 5 PDFs de teoría (Intent, RecyclerView, RecyclerView Pasos, RecyclerView Medidas List/Grid, Realm) y 6 proyectos de ejercicios (E3, E4, E5, E6, E8, Realm). Todo en **Java + XML**. Las recetas de cada bloque están en `knowledge/patrones/` y el mapa de qué receta cubre qué, en `knowledge/cobertura.md`.
 
 ## Entra
 
