@@ -42,7 +42,7 @@ Abierta: [YYYY-MM-DD]
 2. `qa` verifica ese commit contra el criterio de aceptación (solo lectura, ejecuta) → el supervisor anota `aprobada` o `cambios pedidos` y la línea «Veredicto QA».
 3. Con `cambios pedidos`, vuelve al constructor con los hallazgos. Máximo 2 vueltas: a la tercera se para y se lleva a la persona.
 4. Con `aprobada`: la puerta de merge (`node .claude/skills/orquesta/scripts/puerta.mjs`) y el merge a la rama de integración.
-5. `revisor` (este squad no tiene `tester` ni `ciberseguridad`). Con `/orquesta`, sobre la integración entera; con una feature suelta, sobre la feature. `hecha` cuando la persona lo acepta.
+5. Este squad no tiene más puertas que `qa` (paso 3). `hecha` cuando la persona lo acepta.
 
 ## Revisión QA
 

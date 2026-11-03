@@ -25,7 +25,7 @@ Todos los agentes del kit tienen la misma forma: el mismo frontmatter, las misma
 
 ## Alta
 
-1. **¿Hace falta?** Lee el catálogo y la tabla de ruteo de [`_orchestrator`](../_orchestrator/SKILL.md). Si hay solape, para aquí y dilo (ver arriba).
+1. **¿Hace falta?** Lee el catálogo (este repo no tiene tabla de ruteo). Si hay solape, para aquí y dilo (ver arriba).
 2. **Una ronda de preguntas**, solo de lo que no sepas ya: qué entrega el rol, qué frases o qué estado del repo lo disparan, si solo lee, verifica ejecutando o construye, con qué roles linda y qué doctrina de `knowledge/` necesita. Si no existe esa doctrina y el criterio pasa de unas pocas reglas, va a un fichero nuevo de `knowledge/` y el agente lo lee bajo demanda.
 3. **Decide modelo y herramientas** con las tablas de abajo, y escribe el porqué en una línea. Lo enseñas en el paso 6.
 4. **Escribe `.claude/agents/<rol>.md` desde la plantilla.** Sigue «Cómo se escribe el prompt». Quita todos los `<…>` y las ramas «Si construyes / Si solo lees» que no apliquen.
