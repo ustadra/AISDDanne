@@ -1,0 +1,10 @@
+#!/bin/sh
+# pre-commit — ningún secreto entra en un commit, lo haga quien lo haga: pasa secret-scan.cjs sobre lo que
+# va en el commit (el índice), con el mismo criterio que el hook que Claude Code, Antigravity, Gemini CLI y
+# Codex lanzan antes de cada orden. Aquí cubre lo que no pasa por ningún motor de hooks de agente: Cursor,
+# Copilot, la terminal o un agente sin hooks.
+#
+# Activación (una vez por clon):  git config core.hooksPath .githooks   (la misma que el pre-push)
+# Se salta con --no-verify: solo para una emergencia acordada con el equipo, y se dice en la PR.
+
+exec node .claude/hooks/adaptador.cjs git pre-commit secret-scan

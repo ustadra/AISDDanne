@@ -1,0 +1,38 @@
+{
+  "hooks": {
+    "SessionStart": [
+      {
+        "matcher": "startup|resume|clear",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node .claude/hooks/adaptador.cjs codex SessionStart version-check",
+            "timeout": 20
+          }
+        ]
+      }
+    ],
+    "PreToolUse": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node .claude/hooks/adaptador.cjs codex PreToolUse secret-scan no-ai-attribution block-protected-merges vendor-gate",
+            "timeout": 60
+          }
+        ]
+      }
+    ],
+    "Stop": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node .claude/hooks/adaptador.cjs codex Stop unit-close",
+            "timeout": 40
+          }
+        ]
+      }
+    ]
+  }
+}

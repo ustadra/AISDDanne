@@ -1,0 +1,21 @@
+{
+  "proyecto": "[slug-del-proyecto]",
+  "features": [
+    {
+      "id": 1,
+      "name": "[slug_de_la_feature]",
+      "title": "[Qué se puede enseñar cuando esté]",
+      "description": "[Una o dos frases: qué resuelve y para quién. Cita el campo del BRIEF.md o el O-NN del que sale.]",
+      "agente": "[backend-node | frontend-react | …: un rol que exista en .claude/agents/]",
+      "oleada": 1,
+      "depends_on": [],
+      "files": ["[src/<feature>/]", "[tests/<feature>/]"],
+      "acceptance": [
+        { "criterio": "[C1 · algo que se pueda comprobar, no «que funcione bien»]", "verify": "[comando que sale con 0 si se cumple, o null si es manual]" }
+      ],
+      "status": "pending",
+      "intentos": 0,
+      "sha": null
+    }
+  ]
+}

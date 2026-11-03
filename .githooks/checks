@@ -1,0 +1,6 @@
+# Checks del proyecto: .githooks/pre-push los ejecuta, uno por línea, sobre el commit que se empuja,
+# y rechaza el push si alguno falla. Son los mismos comandos que deberían bloquear la CI.
+# Líneas vacías y comentarios se saltan. Cada línea va con `sh -c` y la entrada cerrada.
+node --test .claude/skills/orquesta/scripts/puerta.test.mjs
+node --test .claude/skills/orquesta/scripts/features.test.mjs
+node --test .claude/skills/nuevo-agente/scripts/comprobar.test.mjs

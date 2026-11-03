@@ -1,0 +1,236 @@
+{
+  "$schema": "https://json.schemastore.org/claude-code-settings.json",
+  "attribution": {
+    "commit": "",
+    "pr": "",
+    "sessionUrl": false
+  },
+  "worktree": {
+    "baseRef": "head"
+  },
+  "hooks": {
+    "SessionStart": [
+      {
+        "matcher": "startup|resume|clear",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node \"$CLAUDE_PROJECT_DIR/.claude/hooks/version-check.cjs\"",
+            "timeout": 15,
+            "statusMessage": "Comprobando si hay una versión nueva"
+          }
+        ]
+      },
+      {
+        "matcher": "compact",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node \"$CLAUDE_PROJECT_DIR/.claude/hooks/compact-handoff.cjs\"",
+            "timeout": 10,
+            "statusMessage": "Reinyectando la foto del estado de antes de compactar"
+          }
+        ]
+      }
+    ],
+    "PreCompact": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node \"$CLAUDE_PROJECT_DIR/.claude/hooks/compact-handoff.cjs\"",
+            "timeout": 10,
+            "statusMessage": "Guardando la foto del estado antes de compactar"
+          }
+        ]
+      }
+    ],
+    "PreToolUse": [
+      {
+        "matcher": "Bash|PowerShell",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node \"$CLAUDE_PROJECT_DIR/.claude/hooks/secret-scan.cjs\"",
+            "timeout": 15,
+            "statusMessage": "Buscando secretos en lo que vas a commitear"
+          },
+          {
+            "type": "command",
+            "command": "node \"$CLAUDE_PROJECT_DIR/.claude/hooks/no-ai-attribution.cjs\"",
+            "timeout": 10,
+            "statusMessage": "Comprobando que commit y PR van solo con la autoría del desarrollador"
+          },
+          {
+            "type": "command",
+            "command": "node \"$CLAUDE_PROJECT_DIR/.claude/hooks/block-protected-merges.cjs\"",
+            "timeout": 10,
+            "statusMessage": "Comprobando que no sea merge o push a rama protegida"
+          },
+          {
+            "type": "command",
+            "command": "node \"$CLAUDE_PROJECT_DIR/.claude/hooks/vendor-gate.cjs\"",
+            "timeout": 10,
+            "statusMessage": "Comprobando entrada de código de terceros"
+          }
+        ]
+      }
+    ],
+    "Stop": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node \"$CLAUDE_PROJECT_DIR/.claude/hooks/unit-close.cjs\"",
+            "timeout": 10,
+            "statusMessage": "Comprobando cierre de la unidad de trabajo"
+          }
+        ]
+      }
+    ]
+  },
+  "permissions": {
+    "allow": [
+      "Read",
+      "Glob",
+      "Grep",
+      "Bash(git status:*)",
+      "Bash(git diff:*)",
+      "Bash(git log:*)",
+      "Bash(git branch:*)",
+      "Bash(curl http://localhost/*)",
+      "Bash(curl http://localhost:1*)",
+      "Bash(curl http://localhost:2*)",
+      "Bash(curl http://localhost:3*)",
+      "Bash(curl http://localhost:4*)",
+      "Bash(curl http://localhost:5*)",
+      "Bash(curl http://localhost:6*)",
+      "Bash(curl http://localhost:7*)",
+      "Bash(curl http://localhost:8*)",
+      "Bash(curl http://localhost:9*)",
+      "Bash(curl -* http://localhost/*)",
+      "Bash(curl -* http://localhost:1*)",
+      "Bash(curl -* http://localhost:2*)",
+      "Bash(curl -* http://localhost:3*)",
+      "Bash(curl -* http://localhost:4*)",
+      "Bash(curl -* http://localhost:5*)",
+      "Bash(curl -* http://localhost:6*)",
+      "Bash(curl -* http://localhost:7*)",
+      "Bash(curl -* http://localhost:8*)",
+      "Bash(curl -* http://localhost:9*)",
+      "Bash(curl http://127.0.0.1/*)",
+      "Bash(curl http://127.0.0.1:1*)",
+      "Bash(curl http://127.0.0.1:2*)",
+      "Bash(curl http://127.0.0.1:3*)",
+      "Bash(curl http://127.0.0.1:4*)",
+      "Bash(curl http://127.0.0.1:5*)",
+      "Bash(curl http://127.0.0.1:6*)",
+      "Bash(curl http://127.0.0.1:7*)",
+      "Bash(curl http://127.0.0.1:8*)",
+      "Bash(curl http://127.0.0.1:9*)",
+      "Bash(curl -* http://127.0.0.1/*)",
+      "Bash(curl -* http://127.0.0.1:1*)",
+      "Bash(curl -* http://127.0.0.1:2*)",
+      "Bash(curl -* http://127.0.0.1:3*)",
+      "Bash(curl -* http://127.0.0.1:4*)",
+      "Bash(curl -* http://127.0.0.1:5*)",
+      "Bash(curl -* http://127.0.0.1:6*)",
+      "Bash(curl -* http://127.0.0.1:7*)",
+      "Bash(curl -* http://127.0.0.1:8*)",
+      "Bash(curl -* http://127.0.0.1:9*)",
+      "PowerShell(curl.exe http://localhost/*)",
+      "PowerShell(curl.exe http://localhost:1*)",
+      "PowerShell(curl.exe http://localhost:2*)",
+      "PowerShell(curl.exe http://localhost:3*)",
+      "PowerShell(curl.exe http://localhost:4*)",
+      "PowerShell(curl.exe http://localhost:5*)",
+      "PowerShell(curl.exe http://localhost:6*)",
+      "PowerShell(curl.exe http://localhost:7*)",
+      "PowerShell(curl.exe http://localhost:8*)",
+      "PowerShell(curl.exe http://localhost:9*)",
+      "PowerShell(curl.exe -* http://localhost/*)",
+      "PowerShell(curl.exe -* http://localhost:1*)",
+      "PowerShell(curl.exe -* http://localhost:2*)",
+      "PowerShell(curl.exe -* http://localhost:3*)",
+      "PowerShell(curl.exe -* http://localhost:4*)",
+      "PowerShell(curl.exe -* http://localhost:5*)",
+      "PowerShell(curl.exe -* http://localhost:6*)",
+      "PowerShell(curl.exe -* http://localhost:7*)",
+      "PowerShell(curl.exe -* http://localhost:8*)",
+      "PowerShell(curl.exe -* http://localhost:9*)",
+      "PowerShell(curl.exe http://127.0.0.1/*)",
+      "PowerShell(curl.exe http://127.0.0.1:1*)",
+      "PowerShell(curl.exe http://127.0.0.1:2*)",
+      "PowerShell(curl.exe http://127.0.0.1:3*)",
+      "PowerShell(curl.exe http://127.0.0.1:4*)",
+      "PowerShell(curl.exe http://127.0.0.1:5*)",
+      "PowerShell(curl.exe http://127.0.0.1:6*)",
+      "PowerShell(curl.exe http://127.0.0.1:7*)",
+      "PowerShell(curl.exe http://127.0.0.1:8*)",
+      "PowerShell(curl.exe http://127.0.0.1:9*)",
+      "PowerShell(curl.exe -* http://127.0.0.1/*)",
+      "PowerShell(curl.exe -* http://127.0.0.1:1*)",
+      "PowerShell(curl.exe -* http://127.0.0.1:2*)",
+      "PowerShell(curl.exe -* http://127.0.0.1:3*)",
+      "PowerShell(curl.exe -* http://127.0.0.1:4*)",
+      "PowerShell(curl.exe -* http://127.0.0.1:5*)",
+      "PowerShell(curl.exe -* http://127.0.0.1:6*)",
+      "PowerShell(curl.exe -* http://127.0.0.1:7*)",
+      "PowerShell(curl.exe -* http://127.0.0.1:8*)",
+      "PowerShell(curl.exe -* http://127.0.0.1:9*)"
+    ],
+    "ask": [
+      "WebFetch",
+      "Bash(wget:*)",
+      "Bash(nc:*)",
+      "Bash(Invoke-WebRequest:*)",
+      "Bash(Invoke-RestMethod:*)",
+      "Bash(iwr:*)",
+      "Bash(irm:*)",
+      "Bash(Start-BitsTransfer:*)",
+      "PowerShell(curl *)",
+      "PowerShell(wget*)",
+      "PowerShell(nc *)",
+      "PowerShell(Invoke-WebRequest*)",
+      "PowerShell(Invoke-RestMethod*)",
+      "PowerShell(iwr*)",
+      "PowerShell(irm*)",
+      "PowerShell(Start-BitsTransfer*)"
+    ],
+    "deny": [
+      "Read(**/.env)",
+      "Read(**/.env.*)",
+      "Read(**/*.pem)",
+      "Read(**/*.key)",
+      "Read(**/*.p12)",
+      "Read(**/id_rsa*)",
+      "Read(**/.aws/**)",
+      "Read(**/.ssh/**)",
+      "Read(**/credentials*)",
+      "Bash(cat .env:*)",
+      "Bash(head .env:*)",
+      "Bash(tail .env:*)",
+      "Bash(type .env:*)",
+      "PowerShell(Get-Content .env*)",
+      "PowerShell(gc .env*)",
+      "PowerShell(cat .env*)",
+      "PowerShell(type .env*)",
+      "Bash(git push --force:*)",
+      "Bash(git push -f:*)",
+      "Bash(git push * --force*)",
+      "Bash(git push * -f*)",
+      "Bash(git reset --hard:*)",
+      "Bash(git branch -D:*)",
+      "Bash(rm -rf:*)",
+      "PowerShell(git push --force*)",
+      "PowerShell(git push -f*)",
+      "PowerShell(git push * --force*)",
+      "PowerShell(git push * -f*)",
+      "PowerShell(git reset --hard*)",
+      "PowerShell(git branch -D*)",
+      "PowerShell(rm -rf*)",
+      "PowerShell(Remove-Item*-Recurse*-Force*)",
+      "PowerShell(Remove-Item*-Force*-Recurse*)"
+    ]
+  }
+}

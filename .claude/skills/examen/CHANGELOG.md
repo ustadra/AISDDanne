@@ -6,3 +6,6 @@
 ## 2.0.0
 - Pasa de skill única a orquestador: reparte el trabajo entre `constructor-android` y `revisor-android` (el que escribe no se revisa a sí mismo) y añade el modo retoque.
 - Añade reglas contra alucinaciones: solo fuentes verificadas, «no verificado» explícito y compilación como prueba.
+
+## 2.1.0
+- La unidad de trabajo pasa a ser el ejercicio: `examenes/<examen>/EJ-NN/` con su `SPEC.md` (estado y veredicto), `solucion/` y `LEEME.md`, en vez de `salida/<examen>/`. Lo exige la adopción del kit (`unit-close`, `/orquesta`).

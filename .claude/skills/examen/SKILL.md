@@ -1,6 +1,6 @@
 ---
 name: examen
-version: 2.0.0
+version: 2.1.0
 description: Orquesta la resolución de un examen de Android de 2º de DAM (Java + XML) ceñido a lo dado en clase. Hace una o dos rondas de preguntas sencillas para que la persona controle el resultado, reparte el trabajo entre `constructor-android` y `revisor-android` y entrega el ejercicio completo. También retoca lo ya hecho («este botón así»). Invocar con /examen, al pegar un enunciado, o ante «hazme el examen», «cambia este botón».
 ---
 
@@ -11,7 +11,7 @@ Tú eres el supervisor: la sesión principal. **Hablas con la persona y decides*
 | Rol | Hace | No hace |
 |---|---|---|
 | **Tú (`/examen`)** | Entender el enunciado, rondas de preguntas, repartir, devolver los fallos al constructor, entregar | Escribir el código del ejercicio |
-| `constructor-android` | Escribe y retoca Java/XML en `salida/<examen>/` | Hablar con la persona, aprobarse a sí mismo |
+| `constructor-android` | Escribe y retoca Java/XML en `examenes/<examen>/EJ-NN/solucion/` | Hablar con la persona, aprobarse a sí mismo |
 | `revisor-android` | Compila (si hay SDK), cruza ids, Manifest, Gradle, temario y requisitos | Editar código |
 
 Dos modos: **examen nuevo** (pasos 1-6) y **retoque** (al final).
@@ -45,18 +45,20 @@ En pocas líneas y sin jerga: **pantallas** (qué se ve), **qué hace cada botó
 
 ## Paso 4 — Construir (`constructor-android`)
 
+Antes, **tú** escribes `examenes/<examen>/EJ-NN/SPEC.md` (un ejercicio = una unidad): cabecera con `Estado: en curso`, `Veredicto QA: —` y la tabla de agentes con su «Escribe en (exclusivo)» (`solucion/`, `LEEME.md`); debajo, los requisitos numerados del enunciado y las decisiones de las rondas. Es lo que lee `unit-close` y lo que el agente recibe por escrito. Un examen con varios ejercicios se hace **uno detrás de otro**.
+
 Lanza el agente con la herramienta `Agent`. El prompt debe llevar, **por escrito**, todo lo que necesita, porque no ve esta conversación:
 - el enunciado completo;
 - las decisiones de las rondas, una por línea;
-- la carpeta `salida/<nombre-del-examen>/`;
+- la carpeta del ejercicio `examenes/<examen>/EJ-NN/` (código en `solucion/`, `LEEME.md` al lado);
 - el paquete (el del enunciado o `com.example.examen`).
 
 Cuando vuelva, lee sus secciones **No verificado** y **Fuera de temario**. Si algo queda ahí, resuélvelo ahora con la persona (una pregunta corta) antes de revisar.
 
 ## Paso 5 — Revisar (`revisor-android`)
 
-Lánzalo sobre `salida/<examen>/` con el enunciado y las decisiones. Resultado:
-- **APROBADO** → paso 6.
+Lánzalo sobre `examenes/<examen>/EJ-NN/` con el enunciado y las decisiones. Resultado:
+- **APROBADO** → anota en el `SPEC.md` `Estado: aprobada` y `Veredicto QA: APROBADA · commit <sha7 o «árbol de trabajo»> · <fecha>`, y paso 6.
 - **CAMBIOS PEDIDOS** → pasa los fallos literales (fichero:línea) a `constructor-android`, y revisa otra vez. **Máximo tres vueltas.** Si sigue fallando, cuéntaselo a la persona con el último informe en vez de seguir.
 
 Tú no compruebas ni arreglas por tu cuenta lo que el revisor tiene que decidir.
@@ -64,7 +66,7 @@ Tú no compruebas ni arreglas por tu cuenta lo que el revisor tiene que decidir.
 ## Paso 6 — Entrega
 
 Respuesta corta y en llano:
-1. Qué se ha hecho y dónde está (`salida/<nombre>/`), con el orden de pegado del `LEEME.md`.
+1. Qué se ha hecho y dónde está (`examenes/<examen>/EJ-NN/`), con el orden de pegado del `LEEME.md`.
 2. Las decisiones que se tomaron en las rondas.
 3. La tabla de requisitos del revisor.
 4. **Estado de compilación dicho tal cual:** «compila con Gradle» (con el `BUILD SUCCESSFUL`) o «NO COMPILADO: sin SDK». Nunca «funciona» si solo compila: no se ha ejecutado en un móvil.

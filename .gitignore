@@ -1,4 +1,4 @@
-salida/*/build/
+examenes/**/build/
 .gradle/
 local.properties
 

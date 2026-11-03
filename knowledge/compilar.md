@@ -42,7 +42,7 @@ Cada esqueleto trae un `gradle/gradle-daemon-jvm.properties` que fija su JDK. Co
 
 1. Elegir esqueleto: `realm` si la solución usa Realm; si no, `base`.
 2. Copiar el esqueleto al scratchpad de la sesión (nunca compilar dentro de `plantilla/`, que debe quedar limpia).
-3. Volcar encima los ficheros de `salida/<examen>/` (código, `res/`, `AndroidManifest.xml`, y los Gradle si los trae). Si el paquete del examen no es `com.example.examen`, cambiar `namespace` y `applicationId`.
+3. Volcar encima los ficheros de `examenes/<examen>/EJ-NN/solucion/` (código, `res/`, `AndroidManifest.xml`, y los Gradle si los trae). Si el paquete del examen no es `com.example.examen`, cambiar `namespace` y `applicationId`.
 4. Escribir `local.properties` con `printf` y barras normales (ver arriba).
 5. Si el esqueleto no tiene imágenes que la solución usa, crear PNG mínimos con el nombre de `drawable` pedido solo para poder compilar; no se entregan.
 6. `./gradlew assembleDebug --offline` si ya hay caché, si no `./gradlew assembleDebug`. En Windows, `gradlew.bat`.
