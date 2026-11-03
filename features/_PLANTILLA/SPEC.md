@@ -73,5 +73,4 @@ Además del criterio de aceptación, la Definición de Done del proyecto (ver `A
 - [ ] Criterio de aceptación verificado por `qa` (Veredicto QA `APROBADA` sobre el último commit)
 - [ ] Build y tests limpios
 - [ ] Sin secretos
-- [ ] `revisor` ✅ (si el plan lo pide)
 - [ ] Aceptada por la persona → `hecha`
