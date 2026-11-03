@@ -38,6 +38,14 @@ Cada esqueleto trae un `gradle/gradle-daemon-jvm.properties` que fija su JDK. Co
 
 `plantilla/base` (RecyclerView, Intents, vistas; copia limpia de E8) y `plantilla/realm` (copia limpia del proyecto Realm; AGP 8.9.1, Gradle 8.12, plugin `realm-android`). Paquete por defecto: `com.example.examen`.
 
+## Atajo: `tools/compilar.sh`
+
+Hace todo lo de abajo de una vez y sale con 0 solo con `BUILD SUCCESSFUL`:
+```
+sh tools/compilar.sh <base|realm> examenes/<examen>/EJ-NN/solucion [paquete]
+```
+Elige el esqueleto y su `JAVA_HOME`, compila en una carpeta temporal fuera del repo (imprime la ruta y deja `gradle.log`), crea PNG provisionales para los `drawable` que falten y para el demonio. Probado: compila una solución mínima en `base` y falla con código 1 si el código está roto. Es lo que usan `revisor-android` y las verificaciones de `qa`. Los pasos que siguen son lo que hace, por si hay que hacerlo a mano.
+
 ## Procedimiento del revisor
 
 1. Elegir esqueleto: `realm` si la solución usa Realm; si no, `base`.
