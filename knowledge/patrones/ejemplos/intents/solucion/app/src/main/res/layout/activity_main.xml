@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp">
+
+    <EditText
+        android:id="@+id/editTextMain"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Escribe algo"
+        android:inputType="text" />
+
+    <RadioGroup
+        android:id="@+id/radioGroup"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <RadioButton
+            android:id="@+id/rbUno"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Opción 1" />
+
+        <RadioButton
+            android:id="@+id/rbDos"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Opción 2" />
+
+        <RadioButton
+            android:id="@+id/rbTres"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Opción 3" />
+    </RadioGroup>
+
+    <Button
+        android:id="@+id/btnSecond"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="To second" />
+</LinearLayout>
