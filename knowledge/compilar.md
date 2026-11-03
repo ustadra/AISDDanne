@@ -38,11 +38,19 @@ Cada esqueleto trae un `gradle/gradle-daemon-jvm.properties` que fija su JDK. Co
 
 `plantilla/base` (RecyclerView, Intents, vistas; copia limpia de E8) y `plantilla/realm` (copia limpia del proyecto Realm; AGP 8.9.1, Gradle 8.12, plugin `realm-android`). Paquete por defecto: `com.example.examen`.
 
+## Atajo: `tools/compilar.sh`
+
+Hace todo lo de abajo de una vez y sale con 0 solo con `BUILD SUCCESSFUL`:
+```
+sh tools/compilar.sh <base|realm> examenes/<examen>/EJ-NN/solucion [paquete]
+```
+Elige el esqueleto y su `JAVA_HOME`, compila en una carpeta temporal fuera del repo (imprime la ruta y deja `gradle.log`), crea PNG provisionales para los `drawable` que falten y para el demonio. Probado: compila una solución mínima en `base` y falla con código 1 si el código está roto. Es lo que usan `revisor-android` y las verificaciones de `qa`. Los pasos que siguen son lo que hace, por si hay que hacerlo a mano.
+
 ## Procedimiento del revisor
 
 1. Elegir esqueleto: `realm` si la solución usa Realm; si no, `base`.
 2. Copiar el esqueleto al scratchpad de la sesión (nunca compilar dentro de `plantilla/`, que debe quedar limpia).
-3. Volcar encima los ficheros de `salida/<examen>/` (código, `res/`, `AndroidManifest.xml`, y los Gradle si los trae). Si el paquete del examen no es `com.example.examen`, cambiar `namespace` y `applicationId`.
+3. Volcar encima los ficheros de `examenes/<examen>/EJ-NN/solucion/` (código, `res/`, `AndroidManifest.xml`, y los Gradle si los trae). Si el paquete del examen no es `com.example.examen`, cambiar `namespace` y `applicationId`.
 4. Escribir `local.properties` con `printf` y barras normales (ver arriba).
 5. Si el esqueleto no tiene imágenes que la solución usa, crear PNG mínimos con el nombre de `drawable` pedido solo para poder compilar; no se entregan.
 6. `./gradlew assembleDebug --offline` si ya hay caché, si no `./gradlew assembleDebug`. En Windows, `gradlew.bat`.

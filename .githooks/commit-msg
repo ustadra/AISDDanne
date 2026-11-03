@@ -1,0 +1,7 @@
+#!/bin/sh
+# commit-msg — el mensaje sale con la autoría del desarrollador, sin la firma de ningún agente de IA.
+# Pasa no-ai-attribution.cjs sobre el mensaje, sin los comentarios ni el diff que añade `git commit -v`.
+# Cubre a quien no pasa por un motor de hooks de agente: Cursor, Copilot, la terminal.
+#
+# Activación (una vez por clon):  git config core.hooksPath .githooks   (la misma que el pre-push)
+exec node .claude/hooks/adaptador.cjs git commit-msg --fichero "$1" no-ai-attribution

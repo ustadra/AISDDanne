@@ -1,0 +1,47 @@
+{
+  "context": {
+    "fileName": [
+      "AGENTS.md",
+      "GEMINI.md"
+    ]
+  },
+  "hooks": {
+    "SessionStart": [
+      {
+        "hooks": [
+          {
+            "name": "ai-sdd-inicio",
+            "type": "command",
+            "command": "node .claude/hooks/adaptador.cjs gemini SessionStart version-check",
+            "timeout": 20000
+          }
+        ]
+      }
+    ],
+    "BeforeTool": [
+      {
+        "matcher": "run_shell_command|read_file|read_many_files",
+        "hooks": [
+          {
+            "name": "ai-sdd-ordenes",
+            "type": "command",
+            "command": "node .claude/hooks/adaptador.cjs gemini PreToolUse secret-scan no-ai-attribution block-protected-merges vendor-gate",
+            "timeout": 60000
+          }
+        ]
+      }
+    ],
+    "AfterAgent": [
+      {
+        "hooks": [
+          {
+            "name": "ai-sdd-cierre",
+            "type": "command",
+            "command": "node .claude/hooks/adaptador.cjs gemini Stop unit-close",
+            "timeout": 40000
+          }
+        ]
+      }
+    ]
+  }
+}

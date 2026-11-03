@@ -1,0 +1,6 @@
+# Los git hooks se ejecutan con sh: siempre LF, también en Windows (core.autocrlf=true)
+.githooks/* text eol=lf
+
+# El wrapper de Gradle se ejecuta en sh: LF; el .bat, CRLF
+gradlew text eol=lf
+*.bat text eol=crlf

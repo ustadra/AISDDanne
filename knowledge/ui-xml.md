@@ -72,7 +72,7 @@ Preferir `LinearLayout` cuando la pantalla es una columna o una fila simple: es 
 
 - «Botón grande en el centro, azul» → `wrap_content` o ancho fijo, centrado, `backgroundTint` azul, `textSize` mayor.
 - «Dos botones juntos abajo, uno al lado del otro y del mismo tamaño» → `LinearLayout` horizontal, cada botón `0dp` + `weight="1"`, restricción abajo.
-- «Lista con foto a la izquierda y nombre a la derecha» → layout de ítem horizontal (ver `patrones.md`).
+- «Lista con foto a la izquierda y nombre a la derecha» → layout de ítem horizontal (ver `patrones/` y `cobertura.md`).
 - «Que se vea como una cuadrícula de 2 columnas» → `GridLayoutManager(this, 2)` + ítem vertical.
 
 Cuando la petición sea vaga («que quede bonito»), el constructor propone **una** opción concreta con los valores y deja que la persona la cambie; no rellena con adornos.

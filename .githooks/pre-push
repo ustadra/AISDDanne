@@ -1,0 +1,129 @@
+#!/bin/sh
+# pre-push — dos compuertas antes de que algo salga hacia el remoto:
+#   1. Impide el push directo (o el borrado) de las ramas protegidas.
+#   2. Si existe .githooks/checks, ejecuta los checks del proyecto (los comandos de la CI, uno por
+#      línea) sobre el commit que se empuja, y rechaza el push si alguno falla.
+# Git hook del lado cliente: sustituye a la branch protection de GitHub, que el plan Free no ofrece
+# en repos privados, y adelanta la CI a antes del push.
+# Flujo: feat/* o feature/*, fix/*, chore/* -> push -> PR -> merge en la web.
+#
+# Activación (una vez por clon):  git config core.hooksPath .githooks
+# Sin ella git no lo ejecuta y no protege nada (unit-close.cjs avisa si falta).
+# Se salta con --no-verify: solo para una emergencia acordada con el equipo, y se dice en la PR.
+#
+# Excepción de nacimiento: CREAR `main` o `master` en un remoto que todavía no tiene NINGUNA rama
+# (el primer push de un repo nuevo de /objetivo: remote_sha todo ceros y `git ls-remote --heads`
+# vacío) se deja pasar, con sus checks. Si ls-remote falla, no hay excepción. Actualizarla o
+# borrarla, nunca; y crear `staging`, `produccion` o `production`, ni `main` en un remoto que ya
+# tiene otras ramas, tampoco: eso ya no es nacer, es saltarse la PR.
+#
+# Los checks prueban el árbol de trabajo, así que el push se rechaza también si lo que se empuja no
+# es el commit que tienes checked-out o si hay cambios sin commitear en ficheros versionados: se
+# estaría probando otra cosa. Un push que solo borra, o que solo empuja commits que ya están en algún
+# remoto (una etiqueta de una versión pasada), no lleva código nuevo y no ejecuta checks.
+#
+# Adaptado de .githooks/pre-push y scripts/squad-checks.sh de gzurl/agent-squad (MIT); procedencia
+# en knowledge/entrega/PROCEDENCIA.md.
+#
+# La misma lista que .claude/hooks/block-protected-merges.cjs y unit-close.cjs.
+PROTECTED="main master staging produccion production"
+CHECKS=".githooks/checks"
+ZERO=0000000000000000000000000000000000000000
+
+REMOTO="$1"
+NACEN="main master"
+
+# ¿El remoto no tiene ninguna rama? Se pregunta una vez y solo si hace falta. Si ls-remote falla
+# (sin red, sin permiso), la respuesta es no: ante la duda, no hay excepción.
+remoto_vacio=""
+remoto_sin_ramas() {
+  if [ -z "$remoto_vacio" ]; then
+    remoto_vacio=no
+    if ramas=$(git ls-remote --heads "$REMOTO" </dev/null 2>/dev/null) && [ -z "$ramas" ]; then
+      remoto_vacio=si
+    fi
+  fi
+  [ "$remoto_vacio" = si ]
+}
+
+head=$(git rev-parse -q --verify HEAD 2>/dev/null)
+nuevos=0
+fuera_de_head=""
+
+while read -r local_ref local_sha remote_ref remote_sha; do
+  branch="${remote_ref#refs/heads/}"
+  for p in $PROTECTED; do
+    if [ "$branch" = "$p" ] && [ "$remote_sha" = "$ZERO" ] && [ "$local_sha" != "$ZERO" ] &&
+      case " $NACEN " in *" $p "*) true ;; *) false ;; esac && remoto_sin_ramas; then
+      echo "[pre-push] Nacimiento: se crea '$p' en un remoto sin ramas. A partir de aquí, solo por PR." >&2
+      continue
+    fi
+    if [ "$branch" = "$p" ]; then
+      echo "" >&2
+      echo "[pre-push] BLOQUEADO: push directo a '$p' (ramas protegidas: $PROTECTED)." >&2
+      echo "[pre-push] Sube una rama (feat/* o feature/*, fix/*, chore/*) y abre una PR." >&2
+      echo "" >&2
+      exit 1
+    fi
+  done
+  [ "$local_sha" = "$ZERO" ] && continue # un borrado no lleva código
+  # ¿Lleva commits que ningún remoto conocido tiene todavía?
+  if [ -n "$(git rev-list -n 1 "$local_sha" --not --remotes 2>/dev/null)" ]; then
+    nuevos=1
+    commit=$(git rev-parse -q --verify "$local_sha^{commit}" 2>/dev/null)
+    [ "$commit" = "$head" ] || fuera_de_head="$local_ref"
+  fi
+done
+
+[ "$nuevos" -eq 1 ] || exit 0
+cd "$(git rev-parse --show-toplevel)" || exit 1
+[ -f "$CHECKS" ] || exit 0
+
+if [ -n "$fuera_de_head" ]; then
+  echo "" >&2
+  echo "[pre-push] BLOQUEADO: $fuera_de_head no es el commit que tienes checked-out." >&2
+  echo "[pre-push] Los checks de $CHECKS prueban el árbol de trabajo: empuja desde un checkout de esa rama." >&2
+  echo "" >&2
+  exit 1
+fi
+if ! git diff --quiet HEAD -- 2>/dev/null; then
+  echo "" >&2
+  echo "[pre-push] BLOQUEADO: hay cambios sin commitear en ficheros versionados." >&2
+  echo "[pre-push] Los checks los probarían a ellos y no a lo que empujas: commitéalos o apártalos antes." >&2
+  echo "" >&2
+  exit 1
+fi
+
+# Un hook corre con variables propias de git (GIT_DIR y otras). Un check que use git, como un test que
+# monta un repo en una carpeta temporal, actuaría sobre este repo en vez de sobre el suyo.
+# shellcheck disable=SC2046 # se parten a propósito, una variable cada una
+unset $(git rev-parse --local-env-vars)
+
+# Cada check por separado y con la entrada cerrada: uno que falla no se esconde detrás de otro ni
+# de una tubería, y uno que espera entrada no se queda colgado. Se saltan las líneas vacías y los
+# comentarios, también sangrados, y se quitan los retornos de carro de un fichero guardado con CRLF.
+fallos=0
+resumen=""
+while IFS= read -r linea || [ -n "$linea" ]; do
+  linea=$(printf '%s' "$linea" | tr -d '\r')
+  case "$(printf '%s' "$linea" | sed 's/^[[:space:]]*//')" in ''|'#'*) continue ;; esac
+  echo "[pre-push] check: $linea" >&2
+  sh -c "$linea" </dev/null
+  codigo=$?
+  if [ "$codigo" -eq 0 ]; then
+    resumen="$resumen
+  ok     $linea"
+  else
+    resumen="$resumen
+  FALLA  $linea (salida $codigo)"
+    fallos=1
+  fi
+done < "$CHECKS"
+
+[ -n "$resumen" ] || exit 0
+echo "[pre-push] resumen de $CHECKS:$resumen" >&2
+if [ "$fallos" -ne 0 ]; then
+  echo "[pre-push] BLOQUEADO: algún check falla. Arréglalo y vuelve a empujar." >&2
+  exit 1
+fi
+exit 0

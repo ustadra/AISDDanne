@@ -1,55 +1,57 @@
-# Examen DAM 2º — Android (Java + XML)
+@AGENTS.md
 
-Proyecto para **resolver exámenes de Android de 2º de DAM** ciñéndose a lo dado en clase. La persona pega el enunciado, responde una o dos rondas de preguntas sencillas y recibe el ejercicio completo, listo para pegar en Android Studio. Después puede pedir retoques en sus palabras («este botón así») y la IA los aplica sin inventar.
+# CLAUDE.md — lo específico de Claude Code
 
-## Equipo
+> Lo común a cualquier agente está en `AGENTS.md`, importado arriba. Aquí solo va lo que depende de mecanismos de Claude Code.
 
-- **Supervisor = tú, la sesión principal**, con la skill `/examen` (`.claude/skills/examen/SKILL.md`). Es el único que habla con la persona. Si pega un enunciado sin más, empieza por ahí.
-- `constructor-android` (`.claude/agents/`): escribe y retoca el código en `salida/<examen>/`.
-- `revisor-android` (`.claude/agents/`): compila si hay SDK, cruza ids, Manifest, Gradle y requisitos. Solo lee; no edita.
-- Un subagente nunca habla con la persona ni lanza a otro. Todo lo que necesita se le pasa por escrito en el prompt.
+## Supervisor y squad
 
-No hay más roles a propósito: nada de despliegue, nube, CI ni bases de datos de servidor. Lo que se pida fuera de Android + Java + XML se avisa.
+- **El supervisor eres tú, el main loop**, con la skill `/examen`. Eres el único que habla con la persona; un subagente nunca orquesta a otros ni le pregunta nada.
+- Squad, invocable con la herramienta `Agent` (roster y activación en `squad/_catalogo.md`):
+  - `constructor-android` → escribe y retoca el código de un ejercicio.
+  - `revisor-android` → compila, cruza ids, Manifest, Gradle, temario y requisitos; veredicto `APROBADO` / `CAMBIOS PEDIDOS`.
+  - `qa` → veredicto de las unidades de construcción de este repo (recetas, ensayos) bajo `/orquesta`.
+- Todo lo que un agente necesita se le pasa **por escrito en el prompt** (enunciado, decisiones de las rondas, carpeta del ejercicio): no ve esta conversación.
+- Si la persona nombra un agente o una `/skill`, esa invocación manda.
+- **Rondas de preguntas:** con `AskUserQuestion`, 2-4 preguntas cada una y una opción recomendada (el tope de rondas y qué se pregunta, en `AGENTS.md` y en la skill `/examen`).
 
-## Persona de la que hablas
+## Skills
 
-Alumno de 2º de DAM que quiere el control del resultado sin entrar en detalles técnicos (perfil «vibe coder»). Habla en llano: pantallas, botones, textos, qué pasa al pulsar. Nada de arquitectura, patrones ni librerías.
-**Máximo dos rondas de preguntas** antes de construir, con `AskUserQuestion`, 2-4 preguntas cada una y una opción recomendada. No preguntes lo que el enunciado ya responde.
+- `/examen` — entrada única para un examen: lee el enunciado, hace las rondas, reparte entre constructor y revisor, entrega y retoca. También ante «cambia este botón».
+- `/objetivo` y `/orquesta` — para construir y ampliar el propio repo (nuevas recetas, ensayos): anotan el objetivo en `features/REGISTRO.md`, lo parten en unidades y las construyen. En modo por oleadas, `/orquesta` lanza con `Agent` a los agentes de cada oleada a la vez.
+- `/nuevo-agente` — para dar de alta o alinear un agente con la forma estándar (`comprobar.mjs`).
 
-## Fuentes de verdad (todo sale de aquí)
+## Multi-agente en Claude Code
 
-| Fichero | Para qué |
-|---|---|
-| [`knowledge/temario.md`](knowledge/temario.md) | Qué entra y qué no; erratas del temario |
-| [`knowledge/patrones.md`](knowledge/patrones.md) | Código tal como se hace en clase |
-| [`knowledge/ui-xml.md`](knowledge/ui-xml.md) | «Lo quiero así» → atributos XML reales |
-| [`knowledge/compilar.md`](knowledge/compilar.md) | Cómo se compila y con qué esqueleto |
-| `plantilla/base`, `plantilla/realm` | Esqueletos limpios de Gradle para compilar (copias de E8 y Realm) |
+- Sesiones en paralelo: `claude --worktree <tarea>`. Subagentes que editan en paralelo: `isolation: "worktree"`; `settings.json` lleva `"worktree": {"baseRef": "head"}` para que vean los commits locales.
+- Los hooks se invocan como `node "$CLAUDE_PROJECT_DIR/.claude/hooks/<hook>.cjs"`: la ruta sale de la raíz de la sesión.
 
-Los ejercicios originales están en `C:\Users\SOFT7\Downloads\Repo\Repo` (E3, E4, E5, E6, E8, Realm y 5 PDFs). Son el último recurso para comprobar cómo se hizo algo en clase.
+## Hooks y permisos
 
-## Contra las alucinaciones
+- Cableados en `.claude/settings.json`: `version-check` (al abrir sesión), `compact-handoff` (guarda y reinyecta el estado al compactar), `secret-scan`, `no-ai-attribution`, `block-protected-merges` y `vendor-gate` (antes de cada orden de shell, matcher `Bash|PowerShell`) y `unit-close` (al terminar). Los otros runtimes cablean los mismos (salvo `compact-handoff`) en `.agents/hooks.json`, `.gemini/settings.json` y `.codex/hooks.json`: un hook que entra o sale, en los cuatro.
+- `attribution` vacío en `settings.json` evita que Claude Code firme commits y PR.
+- `vendor-gate` corre sin `--estricto`: bloquea clonar e instalar desde una URL, no las dependencias de Gradle.
+- Personal y fuera de git: `.claude/settings.local.json` y `CLAUDE.local.md` (plantillas en el kit AI_SDD).
+- Integraciones MCP: `.mcp.json`, vacío.
 
-1. **Solo se escribe lo que está en las fuentes de verdad o en los ejercicios de clase.** Clase, método o atributo que no aparezca: no se usa de memoria. Se busca en los ejercicios; si no está, se marca **«no verificado»** y se cuenta a la persona con la alternativa del temario.
-2. **Nada de «No entra»** (Kotlin, Compose, Fragments, ViewModel, Room, corrutinas, `startActivityForResult`…). Si el enunciado lo pide, se avisa en la ronda 1.
-3. **Compilar es la prueba de que algo existe.** Con SDK, el revisor ejecuta `assembleDebug`; sin él, la entrega dice **«NO COMPILADO»**. Nunca «compila» o «funciona» sin evidencia; y `BUILD SUCCESSFUL` no significa «hace lo que pide el enunciado».
-4. **Vago → una propuesta concreta.** Si la persona dice «que quede bonito», se propone un valor concreto («160dp, #274c77, 18sp») y se pregunta; no se rellena con adornos.
-5. **Un retoque cambia solo lo que se pidió.**
+## Compactación
 
-## Para sacar un 10 sin pasarse
+Al resumir esta conversación, conserva siempre: la rama y el worktree en que trabajas; el **examen y el ejercicio** abiertos (`examenes/<examen>/EJ-NN`) y su estado; el paso exacto en que estás y lo siguiente; las **decisiones de las rondas** que aún no estén en `SPEC.md`; el último veredicto de `revisor-android` o `qa` con el commit sobre el que se dio. `compact-handoff` reinyecta lo que se saca de git y del disco.
 
-1. Todos los requisitos explícitos del enunciado, con sus ids, nombres, textos y orden exactos.
-2. Lo básico que se mira en la corrección: campo vacío, `null`, lista vacía, Activities en el Manifest, dependencias en Gradle, `realm.close()`.
-3. Código limpio con comentarios cortos en español donde ayuden a defenderlo.
-4. Sin extras que nadie pidió.
+## ClaudeBot
 
-## Qué entrega
+La mascota de escritorio que refleja lo que está haciendo Claude Code: piensa, escribe código,
+ejecuta un comando o te pide permiso. **No hay nada que instalar en este repo**: se instala una
+vez por equipo y vale para todos los proyectos a la vez, porque sus hooks van en
+`~/.claude/settings.json`, a nivel de usuario y no de proyecto.
 
-`salida/<nombre-del-examen>/` con las rutas de un proyecto de Android Studio (`app/src/main/java/...`, `res/layout/...`, `AndroidManifest.xml`) y un `LEEME.md` con el orden de pegado, cambios de Gradle, imágenes necesarias y cómo probarlo.
+Se ejecuta el instalador, doble clic, y ya: él solo se cablea a Claude Code y se apunta al inicio
+de Windows. Después hay que **abrir una sesión nueva** de Claude Code, porque los hooks se leen al
+arrancar la sesión. `Win+Alt+C` la muestra y la esconde.
 
-## Reglas del repo
+Qué verás: un bocadillo por sesión, con el proyecto, la herramienta y cuánto lleva; el modelo y
+el consumo de contexto, con aviso cuando toca `/compact`; y el nombre del agente del squad que
+esté trabajando, con su tiempo al terminar. Si una sesión pide permiso, se resalta y reclama.
 
-- Idioma: español. Sin datos personales en enunciados ni soluciones.
-- Commit solo si la persona lo pide.
-- **Órdenes:** tres intentos y paras; lo largo escribe en el scratchpad; encadena con `&&`; sin `rm -rf`; no descargues ni instales nada sin que la persona lo haya pedido.
-- Las compilaciones se hacen en el scratchpad, nunca dentro de `plantilla/` ni de `salida/`.
+Su código vive en su propio repositorio, `vault-ia-001/FCT.ClaudeBot`. Para instalarla no se compila nada:
+pide la carpeta con `Preparar-equipo.cmd` y el `ClaudeBotOverlay-Setup-*.exe` al lado, y doble clic.

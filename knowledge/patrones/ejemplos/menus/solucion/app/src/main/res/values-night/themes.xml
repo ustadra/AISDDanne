@@ -1,0 +1,5 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <!-- Con barra de acción (sin NoActionBar): sin barra no se ve el menú de opciones. -->
+    <style name="Base.Theme.Examen" parent="Theme.Material3.DayNight">
+    </style>
+</resources>
