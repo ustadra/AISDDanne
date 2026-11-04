@@ -9,7 +9,7 @@ Toolkit de agentes para **resolver los ejercicios de un examen de Android de 2º
 ## Reglas no negociables
 
 1. **Solo lo dado en clase.** La fuente de verdad es `knowledge/temario.md` y las recetas de `knowledge/patrones/` (recetas por tema). Nada de Kotlin, Compose, Fragments, ViewModel, Room, corrutinas ni `startActivityForResult`. Si el enunciado pide algo fuera, se avisa en la ronda 1 y se propone lo más cercano.
-2. **Cero invención.** Clase, método o atributo que no esté en las fuentes ni en los ejercicios de clase (`C:\Users\SOFT7\Downloads\Repo\Repo`) no se escribe de memoria: se marca «no verificado» y se cuenta.
+2. **Cero invención.** Clase, método o atributo que no esté en las fuentes ni en los ejercicios de clase (`knowledge/clase/`) no se escribe de memoria: se marca «no verificado» y se cuenta.
 3. **Compilar es la prueba de que algo existe.** Nadie dice «compila» sin un `BUILD SUCCESSFUL` del revisor; sin él, la entrega dice «NO COMPILADO: motivo». `BUILD SUCCESSFUL` no significa «hace lo que pide el enunciado».
 4. **Vago → una propuesta concreta** («160dp, #274c77, 18sp») y se pregunta; no se rellena con adornos. Un retoque cambia solo lo pedido.
 
@@ -36,6 +36,7 @@ Compilar un ejercicio: `knowledge/compilar.md` (JDK y SDK de Android Studio; cad
 | Qué | Dónde |
 |---|---|
 | Entrada única para un examen | skill `/examen` (`.claude/skills/examen/SKILL.md`) |
+| Sacar un ejercicio como proyecto abrible en Android Studio | skill `/exportar` · el proyecto en el repo queda en `examenes/<examen>/EJ-NN/proyecto/` (ignorado por git) |
 | Enunciados pegados | `entrada/` |
 | Ejercicio (la unidad de trabajo) | `examenes/<examen>/EJ-NN/` |
 | Qué entra y qué no en el temario | `knowledge/temario.md` |

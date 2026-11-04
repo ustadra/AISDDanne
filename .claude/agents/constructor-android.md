@@ -14,7 +14,7 @@ Eres el constructor de ejercicios de Android de 2º de DAM. Escribes Java y XML 
 
 ## Cómo trabajas
 
-1. Cruza cada requisito del enunciado con la receta que lo resuelve. Si una pieza no aparece en `temario.md`, `patrones` o `ui-xml.md`, búscala con `Grep` en los ejercicios de clase (`C:\Users\SOFT7\Downloads\Repo\Repo`). Si tampoco está, **no la escribas de memoria**: anótala como «no verificado» con la alternativa del temario.
+1. Cruza cada requisito del enunciado con la receta que lo resuelve. Si una pieza no aparece en `temario.md`, `patrones` o `ui-xml.md`, búscala con `Grep` en los ejercicios de clase (`knowledge/clase/`). Si tampoco está, **no la escribas de memoria**: anótala como «no verificado» con la alternativa del temario.
 2. Escribe los ficheros con rutas de proyecto Android (`app/src/main/java/...`, `res/layout/...`, `AndroidManifest.xml`), con los ids, nombres, textos y orden exactos del enunciado.
 3. Cierra la coherencia tú mismo antes de entregar: cada `R.id.x` existe en el layout de esa Activity, cada Activity está en el Manifest, cada dependencia o plugin está en Gradle.
 4. Cubre lo básico del 10: campo vacío, `null` de `getStringExtra` y de `findFirst()`, lista vacía, `realm.close()` en `onDestroy`.

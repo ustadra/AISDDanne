@@ -1,6 +1,6 @@
 ---
 name: examen
-version: 2.1.1
+version: 2.2.0
 description: Orquesta la resolución de un examen de Android de 2º de DAM (Java + XML) ceñido a lo dado en clase. Hace una o dos rondas de preguntas sencillas para que la persona controle el resultado, reparte el trabajo entre `constructor-android` y `revisor-android` y entrega el ejercicio completo. También retoca lo ya hecho («este botón así»). Invocar con /examen, al pegar un enunciado, o ante «hazme el examen», «cambia este botón».
 ---
 
@@ -66,7 +66,7 @@ Tú no compruebas ni arreglas por tu cuenta lo que el revisor tiene que decidir.
 ## Paso 6 — Entrega
 
 Respuesta corta y en llano:
-1. Qué se ha hecho y dónde está (`examenes/<examen>/EJ-NN/`), con el orden de pegado del `LEEME.md`.
+1. Qué se ha hecho y dónde está (`examenes/<examen>/EJ-NN/`). Para abrirlo: `examenes/<examen>/EJ-NN/proyecto/` (lo deja el revisor al compilar) se abre directamente con *File → Open* en Android Studio; el orden de pegado del `LEEME.md` es la alternativa manual. Si la persona lo quiere fuera del repo, `/exportar`.
 2. Las decisiones que se tomaron en las rondas.
 3. La tabla de requisitos del revisor.
 4. **Estado de compilación dicho tal cual:** «compila con Gradle» (con el `BUILD SUCCESSFUL`) o «NO COMPILADO: sin SDK». Nunca «funciona» si solo compila: no se ha ejecutado en un móvil.

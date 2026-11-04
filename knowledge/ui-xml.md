@@ -1,6 +1,6 @@
 # De «lo quiero así» a XML
 
-Traductor de lo que la persona dice a atributos reales. **Solo se usan atributos de esta tabla.** Si lo que pide no está, el constructor no lo inventa: lo busca en los ejercicios de `Downloads\Repo\Repo` o lo marca como «no comprobado» y se lo cuenta a la persona.
+Traductor de lo que la persona dice a atributos reales. **Solo se usan atributos de esta tabla.** Si lo que pide no está, el constructor no lo inventa: lo busca en los ejercicios de `knowledge/clase/` o lo marca como «no comprobado» y se lo cuenta a la persona.
 
 Todos son atributos de Android estándar (`android:` salvo los marcados `app:`). `dp` para tamaños y márgenes, `sp` para texto.
 

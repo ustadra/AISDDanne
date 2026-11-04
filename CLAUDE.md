@@ -18,6 +18,7 @@
 ## Skills
 
 - `/examen` — entrada única para un examen: lee el enunciado, hace las rondas, reparte entre constructor y revisor, entrega y retoca. También ante «cambia este botón».
+- `/exportar` — saca un ejercicio hecho como proyecto de Android Studio completo y limpio a una carpeta fuera del repo (`tools/compilar.sh --salida`, solo si compila).
 - `/objetivo` y `/orquesta` — para construir y ampliar el propio repo (nuevas recetas, ensayos): anotan el objetivo en `features/REGISTRO.md`, lo parten en unidades y las construyen. En modo por oleadas, `/orquesta` lanza con `Agent` a los agentes de cada oleada a la vez.
 - `/nuevo-agente` — para dar de alta o alinear un agente con la forma estándar (`comprobar.mjs`).
 
