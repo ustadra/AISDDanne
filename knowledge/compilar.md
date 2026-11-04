@@ -2,37 +2,28 @@
 
 Compilar es la única forma de saber que algo **existe de verdad** (clase, método, id, atributo). Un código que no compila se corrige; uno que no se ha compilado se avisa como «no compilado».
 
-## Herramientas (instaladas fuera del proyecto)
+## Herramientas (no van en el repo)
 
-Instaladas con Android Studio (comprobado el 2026-11-03):
+Hacen falta el **SDK de Android** y el **JDK** que pide cada esqueleto. `tools/compilar.sh` los busca solo, sin rutas fijas, por este orden:
 
-| | Ruta |
+| | Dónde mira |
 |---|---|
-| JDK 25 (Android Studio) y JDK 21 (Temurin) | en la tabla de esqueletos de abajo |
-| Android SDK | `C:\Users\SOFT7\AppData\Local\Android\Sdk` |
-| Plataformas / build-tools | `android-36`, `android-37.0` / `36.0.0` (no hay `cmdline-tools`) |
+| SDK | `ANDROID_SDK_COMPILAR`, `ANDROID_HOME`, `ANDROID_SDK_ROOT`, y los sitios habituales de Android Studio (`%LOCALAPPDATA%\Android\Sdk`, `~/Library/Android/sdk`, `~/Android/Sdk`) |
+| JDK de `base` | `JAVA_HOME_COMPILAR`, el `jbr` de Android Studio (Program Files, `/Applications`, `/opt/android-studio`), `JAVA_HOME` |
+| JDK de `realm` | `JAVA_HOME_COMPILAR`, `JAVA_HOME_21`, un `jdk-21*` de Eclipse Adoptium o de `/usr/lib/jvm`, `JAVA_HOME` |
 
-Variables, **en formato Windows y entre comillas simples** en bash:
-```
-export JAVA_HOME='<el de la tabla de esqueletos>'
-export ANDROID_HOME='C:\Users\SOFT7\AppData\Local\Android\Sdk'
-```
-`local.properties` se escribe con **barras normales** y `printf` (con `echo` bash se come las `\\` y Gradle da `Invalid file path`):
-```
-printf 'sdk.dir=C:/Users/SOFT7/AppData/Local/Android/Sdk\n' > local.properties
-```
-Se lanza con `./gradlew.bat assembleDebug --no-daemon </dev/null`.
+Para fijar uno a mano: `export ANDROID_SDK_COMPILAR=<ruta del SDK>` y `export JAVA_HOME_COMPILAR=<ruta del JDK>`.
 
-Si esas rutas no existen, **no hay compilación**: el revisor lo dice y revisa solo leyendo. No descarga nada por su cuenta. Gradle sí baja su distribución y las librerías la primera vez de cada esqueleto.
+Si no encuentra el SDK o el JDK, **no hay compilación**: el script sale con código 3 y «NO COMPILADO: motivo», y el revisor revisa solo leyendo, y lo dice. No descarga nada por su cuenta. Gradle sí baja su distribución y las librerías la primera vez de cada esqueleto, así que esa primera compilación necesita red.
 
 ## Estado de cada esqueleto
 
-| Esqueleto | Estado | `JAVA_HOME` que exige | Detalle |
+| Esqueleto | Estado | JDK que exige | Detalle |
 |---|---|---|---|
-| `base` | ✅ **Compila** (`BUILD SUCCESSFUL`: Gradle 9.5.0, AGP 9.3.3, `compileSdk` 37) | `C:\Program Files\Android\Android Studio\jbr` (JDK 25) | Verificado con una Activity y un layout mínimos |
-| `realm` | ✅ **Compila** (`BUILD SUCCESSFUL`: Gradle 8.12, AGP 8.9.1, `compileSdk` 36, Realm 10.15.1) | `C:\Users\SOFT7\AppData\Local\Programs\Eclipse Adoptium\jdk-21.0.13.9-hotspot` (JDK 21) | Verificado con `MyApplication` y una Activity mínimas |
+| `base` | ✅ **Compila** (`BUILD SUCCESSFUL`: Gradle 9.5.0, AGP 9.3.3, `compileSdk` 37) | JDK 25 (el de Android Studio) | Verificado con una Activity y un layout mínimos |
+| `realm` | ✅ **Compila** (`BUILD SUCCESSFUL`: Gradle 8.12, AGP 8.9.1, `compileSdk` 36, Realm 10.15.1) | JDK 21 | Verificado con `MyApplication` y una Activity mínimas |
 
-Cada esqueleto trae un `gradle/gradle-daemon-jvm.properties` que fija su JDK. Con otro, Gradle da «Cannot find a Java installation». El revisor pone el `JAVA_HOME` de esta tabla según el esqueleto. Hay también un JDK 17 en `...\Eclipse Adoptium\jdk-17.0.20.101-hotspot`, que ningún esqueleto usa.
+Cada esqueleto trae un `gradle/gradle-daemon-jvm.properties` que fija su JDK. Con otro, Gradle da «Cannot find a Java installation»; en Android Studio se cambia en *Settings → Build Tools → Gradle → Gradle JDK*.
 
 ## Esqueletos
 
@@ -44,7 +35,11 @@ Hace todo lo de abajo de una vez y sale con 0 solo con `BUILD SUCCESSFUL`:
 ```
 sh tools/compilar.sh <base|realm> examenes/<examen>/EJ-NN/solucion [paquete]
 ```
-Elige el esqueleto y su `JAVA_HOME`, compila en una carpeta temporal fuera del repo (imprime la ruta y deja `gradle.log`), crea PNG provisionales para los `drawable` que falten y para el demonio. Probado: compila una solución mínima en `base` y falla con código 1 si el código está roto. Es lo que usan `revisor-android` y las verificaciones de `qa`. Los pasos que siguen son lo que hace, por si hay que hacerlo a mano.
+Elige el esqueleto, busca su JDK y el SDK, compila en una carpeta temporal fuera del repo (imprime la ruta y deja `gradle.log`), crea PNG provisionales para los `drawable` que falten y para el demonio. Probado: compila una solución mínima en `base` y falla con código 1 si el código está roto. Es lo que usan `revisor-android` y las verificaciones de `qa`. Los pasos que siguen son lo que hace, por si hay que hacerlo a mano.
+
+## Proyecto abrible: `--salida`
+
+`sh tools/compilar.sh <base|realm> <solucion> [paquete] --salida <carpeta> [--reemplazar]` deja, solo si compila, el proyecto completo (esqueleto + solución) listo para *File → Open* en Android Studio, sin `build/`, `.gradle/`, `.idea/` ni `local.properties` (Android Studio escribe el suyo). Se niega a pisar una carpeta con contenido salvo con `--reemplazar`. Dentro del repo va a `examenes/<examen>/EJ-NN/proyecto/` (ignorado por git); fuera, lo hace `/exportar`, por defecto en `../exportados/<examen>-EJ-NN` (relativa a la raíz del repo). En un equipo sin SDK, `--sin-compilar` monta el proyecto igual y avisa «NO COMPILADO». Los `drawable` que faltan salen como PNG de 1 píxel con el nombre pedido: hay que sustituirlos por las imágenes reales (las lista el `LEEME.md`). Android Studio debe usar el JDK de cada esqueleto (tabla de arriba) o el sync falla.
 
 ## Procedimiento del revisor
 

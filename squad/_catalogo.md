@@ -1,6 +1,6 @@
 # Squad — catálogo de agentes
 
-> Roster del repo y regla de activación. Los agentes viven en [`.claude/agents/`](../.claude/agents/). Las **skills** (procedimientos) viven en [`.claude/skills/`](../.claude/skills/): `examen`, `objetivo`, `orquesta`, `nuevo-agente`.
+> Roster del repo y regla de activación. Los agentes viven en [`.claude/agents/`](../.claude/agents/). Las **skills** (procedimientos) viven en [`.claude/skills/`](../.claude/skills/): `examen`, `exportar`, `objetivo`, `orquesta`, `nuevo-agente`.
 
 ## Roster
 
