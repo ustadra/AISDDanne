@@ -1,0 +1,5 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <!-- Con barra de acción (sin NoActionBar) para que se vea la flecha atrás. -->
+    <style name="Base.Theme.Examen" parent="Theme.Material3.DayNight">
+    </style>
+</resources>

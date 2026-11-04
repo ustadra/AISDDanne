@@ -12,3 +12,6 @@
 
 ## 2.1.1
 - La regla «cero invención» remite a `knowledge/patrones/` (el fichero único `patrones.md` se dividió por tema en O-01/F-01).
+
+## 2.2.0
+- La entrega apunta a `proyecto/`, el proyecto completo que deja `revisor-android` al compilar (`tools/compilar.sh --salida`), y a `/exportar` para sacarlo fuera del repo.
